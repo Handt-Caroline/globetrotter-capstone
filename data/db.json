@@ -1,0 +1,282 @@
+{
+  "users": [
+    {
+      "id": "u1784850235691",
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "",
+      "passwordHash": "$2b$10$MAIC4u.L7D1AyUFot.KMoeWnBEsKed6E8p77mBcuuIPKLG5Zf4bc.",
+      "preferences": [],
+      "createdAt": "2026-07-23T23:43:55.691Z"
+    }
+  ],
+  "sites": [
+    {
+      "id": "s1",
+      "name": "Musée National de Yaoundé",
+      "description": "National museum showcasing Cameroonian history, art, and royal artifacts.",
+      "category": "culture",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s2",
+      "name": "Monument de la Réunification",
+      "description": "Landmark monument commemorating Cameroon's reunification, with gardens.",
+      "category": "landmark",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s3",
+      "name": "Basilique Marie-Reine-des-Apôtres (Mvolyé)",
+      "description": "Major Catholic basilica overlooking the city from Mvolyé hill.",
+      "category": "religious",
+      "region": "Yaoundé Mvolyé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s4",
+      "name": "Mvog-Betsi Zoo",
+      "description": "Zoo and primate sanctuary in Yaoundé, home to lions, monkeys, and more.",
+      "category": "wildlife",
+      "region": "Yaoundé Mvog-Betsi",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": [
+        {
+          "id": "c1784850831434",
+          "userId": "u1784850235691",
+          "userName": "Test User",
+          "text": "Amazing place, loved seeing the animals!",
+          "createdAt": "2026-07-23T23:53:51.435Z"
+        },
+        {
+          "id": "c1784851515951",
+          "userId": "u1784850235691",
+          "userName": "Test User",
+          "text": "Amazing place, loved seeing the animals!",
+          "createdAt": "2026-07-24T00:05:15.951Z"
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "Musée de la Blackitude",
+      "description": "Museum dedicated to Black African art, culture, and identity.",
+      "category": "culture",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s6",
+      "name": "Centre Artisanal de Yaoundé",
+      "description": "Artisanal center selling crafts, wood carvings, and textiles.",
+      "category": "shopping",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s7",
+      "name": "Cathédrale Notre-Dame des Victoires",
+      "description": "Iconic cathedral in central Yaoundé, notable architecture.",
+      "category": "religious",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s8",
+      "name": "Mont Fébé",
+      "description": "Hilltop area with hotels, embassies, and panoramic views of Yaoundé.",
+      "category": "nature",
+      "region": "Yaoundé Fébé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s9",
+      "name": "Marché Mfoundi",
+      "description": "Lively central market for food, spices, fabrics, and souvenirs.",
+      "category": "market",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s10",
+      "name": "Marché Mokolo",
+      "description": "One of Yaoundé's largest and busiest markets.",
+      "category": "market",
+      "region": "Yaoundé Mokolo",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s11",
+      "name": "Quartier Bastos",
+      "description": "Upscale residential district known for embassies and architecture.",
+      "category": "culture",
+      "region": "Yaoundé Bastos",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s12",
+      "name": "Quartier Essos",
+      "description": "Notable Yaoundé neighborhood with local markets and daily city life.",
+      "category": "culture",
+      "region": "Yaoundé Essos",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s13",
+      "name": "Parc National de Mefou",
+      "description": "Primate sanctuary just outside Yaoundé, home to rescued gorillas and chimps.",
+      "category": "wildlife",
+      "region": "Near Yaoundé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s14",
+      "name": "Palais des Congrès",
+      "description": "Congress hall hosting cultural events, festivals, and gatherings.",
+      "category": "landmark",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s15",
+      "name": "Village Madiba",
+      "description": "Cultural venue blending local charm, food, and community events.",
+      "category": "culture",
+      "region": "Yaoundé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s16",
+      "name": "Statue de Charles Atangana",
+      "description": "Historical landmark honoring a key figure in Cameroonian history.",
+      "category": "landmark",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s17",
+      "name": "Musée Bénédictin (Mont Fébé)",
+      "description": "Museum near Mont Fébé showcasing religious and cultural artifacts.",
+      "category": "culture",
+      "region": "Yaoundé Fébé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s18",
+      "name": "Boulevard du 20 Mai",
+      "description": "Major boulevard, site of national parades and celebrations.",
+      "category": "landmark",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s19",
+      "name": "Rond-Point I Love My Country",
+      "description": "Popular roundabout landmark celebrating Cameroonian pride.",
+      "category": "landmark",
+      "region": "Yaoundé Centre",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    },
+    {
+      "id": "s20",
+      "name": "Nkolandom",
+      "description": "Nature site near Yaoundé with prehistoric caves and Nyong river activities.",
+      "category": "nature",
+      "region": "Near Yaoundé",
+      "lat": 0,
+      "lng": 0,
+      "imageUrl": "",
+      "price": 0,
+      "comments": []
+    }
+  ],
+  "itineraries": [
+    {
+      "id": "it1784851637181",
+      "userId": "u1784850235691",
+      "title": "Weekend in Yaounde",
+      "startDate": "2026-08-01",
+      "endDate": "2026-08-03",
+      "siteIds": []
+    }
+  ],
+  "bookings": [],
+  "payments": []
+}

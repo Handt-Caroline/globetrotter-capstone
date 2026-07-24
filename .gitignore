@@ -1,21 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-.venv/
-ENV/
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-.pytest_cache/
-.mypy_cache/
-*.pyo
+# Node.js
+node_modules/
+npm-debug.log
 
 # Environment variables
 .env
@@ -24,8 +9,17 @@ build/
 # Docker
 .dockerignore
 
-# Data files (populated at runtime; keep only .gitkeep)
-data/*.json
+# Logs
+logs/*.log
+
+# Temp files from our safe write process
+*.tmp
+
+# Python (kept in case any tooling still checks for these — harmless)
+__pycache__/
+*.pyc
+venv/
+.venv/
 
 # IDE / editor
 .vscode/
