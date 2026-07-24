@@ -24,3 +24,13 @@
 
 &#x20; (Musée National, Monument de la Réunification, Mvog-Betsi Zoo, etc.)
 
+## July 24, 2026
+- Built bookings feature (src/routes/bookings.routes.js) — pulls price
+  from the site itself so users can't tamper with the amount.
+- Built manual MoMo/Orange Money payment flow (src/routes/payments.routes.js)
+  — booking response now includes both real payment numbers automatically.
+- Added admin verification (src/routes/admin.routes.js), protected by a
+  secret key (ADMIN_KEY) — confirms payment after checking real SMS.
+- Tested full flow end-to-end via curl: create booking -> see both MoMo/OM
+  numbers -> submit payment reference -> admin verifies -> booking status
+  becomes "confirmed". All working correctly.

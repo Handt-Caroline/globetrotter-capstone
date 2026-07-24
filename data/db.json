@@ -277,6 +277,25 @@
       "siteIds": []
     }
   ],
-  "bookings": [],
-  "payments": []
+  "bookings": [
+    {
+      "id": "b1784855018716",
+      "userId": "u1784850235691",
+      "siteId": "s4",
+      "amount": 0,
+      "status": "confirmed",
+      "createdAt": "2026-07-24T01:03:38.716Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "p1784856896427",
+      "bookingId": "b1784855018716",
+      "provider": "momo",
+      "momoReference": "MP240724.1234",
+      "phoneUsed": "+237677862871",
+      "status": "confirmed",
+      "verifiedAt": "2026-07-24T01:52:15.357Z"
+    }
+  ]
 }
