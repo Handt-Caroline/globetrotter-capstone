@@ -34,3 +34,9 @@
 - Tested full flow end-to-end via curl: create booking -> see both MoMo/OM
   numbers -> submit payment reference -> admin verifies -> booking status
   becomes "confirmed". All working correctly.
+
+  ## July 24, 2026 (cont'd)
+- Built recommendations endpoint (src/routes/recommendations.routes.js) —
+  scores sites by user preference match, deprioritizes already-booked sites,
+  falls back to "popular with other travellers" using comment count when
+  no preferences are set. Each result includes a "reason" field.

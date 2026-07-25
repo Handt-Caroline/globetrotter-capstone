@@ -8,6 +8,17 @@
       "passwordHash": "$2b$10$MAIC4u.L7D1AyUFot.KMoeWnBEsKed6E8p77mBcuuIPKLG5Zf4bc.",
       "preferences": [],
       "createdAt": "2026-07-23T23:43:55.691Z"
+    },
+    {
+      "id": "u1784906865595",
+      "name": "Test",
+      "email": "t@t.com",
+      "phone": "",
+      "passwordHash": "$2b$10$5m6.zkDawQU.tJzK1zUQv.URL1DaRV56cbDpviQF4iy8.Y4zjuTyu",
+      "preferences": [
+        "culture"
+      ],
+      "createdAt": "2026-07-24T15:27:45.595Z"
     }
   ],
   "sites": [

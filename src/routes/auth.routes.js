@@ -5,12 +5,13 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { readDB, writeDB } = require('../db');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
 // POST /auth/register — create a new real user account
 router.post('/register', async (req, res) => {
-  const { name, email, phone, password } = req.body;
+  const { name, email, phone, password, preferences } = req.body;
 
   // Basic validation — reject incomplete submissions
   if (!name || !email || !password) {
@@ -34,7 +35,9 @@ router.post('/register', async (req, res) => {
     email,
     phone: phone || '',
     passwordHash,
-    preferences: [],
+    // preferences are category strings (e.g. "culture", "nature") used later
+    // by GET /recommendations to personalise results
+    preferences: Array.isArray(preferences) ? preferences : [],
     createdAt: new Date().toISOString(),
   };
 
@@ -68,6 +71,25 @@ router.post('/login', async (req, res) => {
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
   res.json({ message: 'Login successful', token, userId: user.id, name: user.name });
+});
+
+// PUT /auth/preferences — logged-in user updates their travel preferences
+// (category tags like "culture", "nature", "history"). Used by /recommendations.
+router.put('/preferences', authMiddleware, async (req, res) => {
+  const { preferences } = req.body;
+
+  if (!Array.isArray(preferences)) {
+    return res.status(400).json({ error: 'preferences must be an array of strings' });
+  }
+
+  const db = readDB();
+  const user = db.users.find((u) => u.id === req.userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  user.preferences = preferences;
+  await writeDB(db);
+
+  res.json({ message: 'Preferences updated', preferences: user.preferences });
 });
 
 module.exports = router;
