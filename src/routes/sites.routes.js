@@ -1,6 +1,8 @@
 // sites.routes.js
-// Lets anyone browse tourist sites in Yaoundé, and lets logged-in
-// users leave comments on a site.
+// Lets anyone browse tourist sites in Yaoundé, with search, category
+// filtering, and pagination (so responses stay small as the catalogue
+// grows — a real scalability consideration). Logged-in users can also
+// leave comments on a site.
 
 const express = require('express');
 const { readDB, writeDB } = require('../db');
@@ -8,10 +10,13 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /sites — browse all sites, with optional search and category filter
-// Examples: /sites?search=zoo   or   /sites?category=culture
+// GET /sites — browse all sites, with optional search, category filter,
+// and pagination. Examples:
+//   /sites?search=zoo
+//   /sites?category=culture
+//   /sites?page=2&limit=10
 router.get('/', (req, res) => {
-  const { category, search } = req.query;
+  const { category, search, page = 1, limit = 20 } = req.query;
   const db = readDB();
   let sites = db.sites;
 
@@ -25,7 +30,17 @@ router.get('/', (req, res) => {
     );
   }
 
-  res.json(sites);
+  // Pagination — prevents sending an enormous response as the catalogue
+  // grows, and demonstrates a real scalability consideration.
+  const startIndex = (page - 1) * limit;
+  const paginated = sites.slice(startIndex, startIndex + Number(limit));
+
+  res.json({
+    total: sites.length,
+    page: Number(page),
+    totalPages: Math.ceil(sites.length / limit),
+    sites: paginated,
+  });
 });
 
 // GET /sites/:id — view one site's full details, including its comments
@@ -47,7 +62,6 @@ router.post('/:id/comments', authMiddleware, async (req, res) => {
   const site = db.sites.find((s) => s.id === req.params.id);
   if (!site) return res.status(404).json({ error: 'Site not found' });
 
-  // Look up the commenting user's name to display next to their comment
   const user = db.users.find((u) => u.id === req.userId);
 
   const newComment = {

@@ -19,6 +19,15 @@
         "culture"
       ],
       "createdAt": "2026-07-24T15:27:45.595Z"
+    },
+    {
+      "id": "u1785092059838",
+      "name": "Retest User",
+      "email": "retest@example.com",
+      "phone": "",
+      "passwordHash": "$2b$10$0JREXiQdXgujQtZ/CwHsXuvbvbq7NpTtKivLBdtIC/QdAR.Nts/xe",
+      "preferences": [],
+      "createdAt": "2026-07-26T18:54:19.838Z"
     }
   ],
   "sites": [
@@ -286,6 +295,16 @@
       "startDate": "2026-08-01",
       "endDate": "2026-08-03",
       "siteIds": []
+    },
+    {
+      "id": "it1785093783246",
+      "userId": "u1785092059838",
+      "title": "Weekend in Yaounde",
+      "startDate": "2026-08-01",
+      "endDate": "2026-08-03",
+      "siteIds": [
+        "s4"
+      ]
     }
   ],
   "bookings": [

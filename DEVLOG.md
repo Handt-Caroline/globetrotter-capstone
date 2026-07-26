@@ -40,3 +40,13 @@
   scores sites by user preference match, deprioritizes already-booked sites,
   falls back to "popular with other travellers" using comment count when
   no preferences are set. Each result includes a "reason" field.
+
+
+
+## July 26, 2026
+- Added itinerary sharing (GET /itineraries/:id/share) — public route,
+  no login required, returns full site details for friends/family to view.
+- Added pagination to GET /sites — supports ?page= and ?limit=, prevents
+  unbounded responses as the site catalogue grows (scalability).
+- Confirmed itineraries, sharing, and site browsing all working correctly
+  after restart.

@@ -1,7 +1,8 @@
 // itineraries.routes.js
-// Lets a logged-in user create and view their own travel itineraries.
-// Every route here requires authentication — users can only see
-// or edit their OWN itineraries, never someone else's.
+// Lets a logged-in user create and manage their own travel itineraries,
+// and lets ANYONE (even without an account) view a shared itinerary
+// via a public read-only link — satisfies "share itineraries with
+// friends and family."
 
 const express = require('express');
 const { readDB, writeDB } = require('../db');
@@ -9,7 +10,19 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Apply authentication to every route in this file
+// GET /itineraries/:id/share — PUBLIC route, placed BEFORE authMiddleware
+// on purpose. A friend or family member without an account can open
+// this link and see the itinerary and its sites, read-only.
+router.get('/:id/share', (req, res) => {
+  const db = readDB();
+  const itinerary = db.itineraries.find((it) => it.id === req.params.id);
+  if (!itinerary) return res.status(404).json({ error: 'Itinerary not found' });
+
+  const sites = db.sites.filter((s) => itinerary.siteIds.includes(s.id));
+  res.json({ ...itinerary, sites });
+});
+
+// Everything below this line requires the user to be logged in.
 router.use(authMiddleware);
 
 // POST /itineraries — create a new itinerary
