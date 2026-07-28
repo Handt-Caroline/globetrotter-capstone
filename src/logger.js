@@ -5,7 +5,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const LOG_PATH = path.join(__dirname, '..', 'logs', 'app.log');
+const LOG_DIR = path.join(__dirname, '..', 'logs');
+const LOG_PATH = path.join(LOG_DIR, 'app.log');
+
+// Ensure the logs directory exists — it isn't committed to git (log files
+// are gitignored), so on a fresh clone/container it may not exist yet.
+if (!fs.existsSync(LOG_DIR)) {
+  fs.mkdirSync(LOG_DIR, { recursive: true });
+}
 
 function log(message) {
   const line = `[${new Date().toISOString()}] ${message}`;
