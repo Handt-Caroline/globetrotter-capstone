@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobeTrotter — Discover the Soul of Cameroon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #0B1F3A;
+    --midnight-deep: #071429;
+    --emerald: #0F766E;
+    --gold: #F4A261;
+    --coral: #FF6B35;
+    --coral-bright: #FF7F4D;
+    --bg: #F8FAFC;
+    --ink: #111827;
+    --ink-soft: #6B7280;
+    --hairline: rgba(11, 31, 58, 0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.55; }
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
+  h1, h2, h3, .display { font-family: 'Fraunces', serif; font-weight: 450; letter-spacing: -0.01em; color: var(--midnight); }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+  }
+  nav.scrolled { background: rgba(248, 250, 252, 0.9); backdrop-filter: blur(10px); padding: 14px 48px; box-shadow: 0 1px 0 var(--hairline); }
+  .nav-mark { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; transition: color 0.4s ease; }
+  nav.scrolled .nav-mark { color: var(--midnight); }
+  .nav-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); display: inline-block; }
+  .nav-links { display: flex; align-items: center; gap: 34px; font-size: 14.5px; font-weight: 500; color: rgba(255,255,255,0.85); transition: color 0.4s ease; }
+  nav.scrolled .nav-links { color: var(--ink-soft); }
+  .nav-links a:hover { color: #fff; }
+  nav.scrolled .nav-links a:hover { color: var(--coral); }
+  .nav-soon { font-size: 10.5px; vertical-align: super; opacity: 0.6; margin-left: 2px; }
+  .nav-cta { background: var(--coral); color: #fff !important; padding: 10px 22px; border-radius: 100px; font-weight: 600; font-size: 14px; transition: transform 0.25s ease, box-shadow 0.3s ease; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(255,107,53,0.35); }
+
+  /* ---------- HERO ---------- */
+  .hero { position: relative; height: 100vh; min-height: 740px; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(7,20,41,0.55) 0%, rgba(7,20,41,0.35) 32%, rgba(7,20,41,0.75) 78%, rgba(7,20,41,0.94) 100%);
+  }
+  .hero-content { position: relative; z-index: 5; width: 100%; padding: 0 48px 100px; display: flex; flex-direction: column; gap: 24px; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--gold); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; width: fit-content; }
+  .hero-eyebrow .line { width: 28px; height: 1px; background: var(--gold); }
+  .hero-title { color: #fff; font-size: clamp(38px, 5.6vw, 74px); line-height: 1.08; max-width: 15ch; font-weight: 450; }
+  .hero-title .accent { color: var(--gold); font-style: italic; }
+  .hero-sub { color: rgba(255,255,255,0.82); font-size: 18px; max-width: 50ch; }
+  .hero-actions { display: flex; align-items: center; gap: 22px; margin-top: 6px; }
+  .btn-primary {
+    background: var(--coral); color: #fff; padding: 16px 30px; border-radius: 100px; font-weight: 600; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0 10px 26px rgba(255,107,53,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); background: var(--coral-bright); box-shadow: 0 14px 30px rgba(255,107,53,0.45); }
+  .btn-primary svg { transition: transform 0.3s ease; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+  .btn-ghost {
+    color: #fff; font-weight: 500; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.3); padding: 15px 24px; border-radius: 100px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+  /* search / explore bar */
+  .explore-bar {
+    background: #fff; border-radius: 18px; padding: 14px 18px; margin-top: 18px;
+    display: flex; align-items: center; gap: 4px; box-shadow: 0 20px 50px rgba(7,20,41,0.35);
+    max-width: 760px;
+  }
+  .eb-field { flex: 1; display: flex; flex-direction: column; gap: 2px; padding: 6px 16px; border-right: 1px solid var(--hairline); }
+  .eb-field:last-of-type { border-right: none; }
+  .eb-label { font-size: 11px; font-weight: 600; color: var(--midnight); }
+  .eb-input { border: none; font-size: 13.5px; color: var(--ink-soft); font-family: inherit; outline: none; background: transparent; }
+  .eb-btn { background: var(--emerald); color: #fff; border: none; border-radius: 12px; padding: 12px 22px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: background 0.25s ease; }
+  .eb-btn:hover { background: #0c5e57; }
+
+  .hero-scroll-cue { position: absolute; bottom: 30px; right: 48px; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 10px; color: rgba(255,255,255,0.6); font-size: 11px; letter-spacing: 0.12em; }
+  .scroll-line { width: 1px; height: 38px; background: rgba(255,255,255,0.3); position: relative; overflow: hidden; }
+  .scroll-line::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: var(--gold); animation: scrollDrip 2.2s ease-in-out infinite; }
+  @keyframes scrollDrip { 0% { top: -100%; } 60% { top: 100%; } 100% { top: 100%; } }
+
+  /* ---------- STATS STRIP (honest numbers only) ---------- */
+  .stats-strip { background: var(--midnight-deep); padding: 28px 48px; display: flex; flex-wrap: wrap; gap: 36px; justify-content: space-between; }
+  .stat-item { color: #fff; display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 26px; color: var(--gold); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 500; }
+
+  /* ---------- SECTION SHARED ---------- */
+  section { padding: 120px 48px; position: relative; }
+  .section-inner { max-width: 1220px; margin: 0 auto; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral); margin-bottom: 16px; }
+  .eyebrow .num { color: var(--emerald); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 60px; flex-wrap: wrap; }
+  .section-title { font-size: clamp(30px, 3.8vw, 46px); max-width: 16ch; }
+  .section-desc { max-width: 38ch; color: var(--ink-soft); font-size: 15.5px; padding-bottom: 6px; }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- BRAND STATEMENT ---------- */
+  .brand-statement { background: #fff; text-align: center; }
+  .brand-statement .section-inner { max-width: 820px; }
+  .brand-quote { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.4; color: var(--midnight); }
+  .brand-quote strong { color: var(--emerald); font-style: italic; font-weight: 450; }
+
+  /* ---------- DESTINATION CARDS ---------- */
+  .dest-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .dest-card { position: relative; border-radius: 18px; overflow: hidden; height: 360px; cursor: pointer; box-shadow: 0 1px 3px rgba(11,31,58,0.08); transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s ease; }
+  .dest-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(11,31,58,0.22); }
+  .dest-card:nth-child(2), .dest-card:nth-child(4) { margin-top: 30px; }
+  .dest-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+  .dest-card:hover img { transform: scale(1.08); }
+  .dest-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,31,58,0) 35%, rgba(7,20,41,0.92) 100%); }
+  .dest-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 20px; color: #fff; }
+  .dest-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gold); font-weight: 700; }
+  .dest-name { font-size: 20px; color: #fff; margin-top: 4px; }
+  .dest-desc { font-size: 13px; color: rgba(255,255,255,0.78); margin-top: 6px; }
+  .dest-loc { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+
+  .view-all { font-size: 14px; font-weight: 600; color: var(--emerald); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .view-all svg { transition: transform 0.3s ease; }
+  .view-all:hover svg { transform: translateX(4px); }
+
+  /* ---------- WHY CHOOSE US ---------- */
+  .why-section { background: var(--midnight); }
+  .why-section .eyebrow { color: var(--gold); }
+  .why-section .section-title { color: #fff; }
+  .why-section .section-desc { color: rgba(255,255,255,0.6); }
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .why-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px;
+    padding: 32px 26px; transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+  }
+  .why-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.07); border-color: rgba(244,162,97,0.4); }
+  .why-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(244,162,97,0.14); color: var(--gold); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .why-card h3 { color: #fff; font-size: 19px; margin-bottom: 10px; }
+  .why-card p { color: rgba(255,255,255,0.55); font-size: 14px; }
+
+  /* ---------- TRUST / PAYMENT ---------- */
+  .trust-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .trust-visual {
+    background: linear-gradient(160deg, var(--emerald) 0%, #0b544e 100%);
+    border-radius: 24px; padding: 44px; position: relative; overflow: hidden; min-height: 340px;
+    display: flex; flex-direction: column; justify-content: center; gap: 22px;
+  }
+  .trust-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
+  .trust-badge-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; }
+  .trust-badge-text strong { color: #fff; font-size: 14.5px; display: block; }
+  .trust-badge-text span { color: rgba(255,255,255,0.65); font-size: 12.5px; }
+
+  .trust-list { display: flex; flex-direction: column; gap: 30px; }
+  .trust-row { display: flex; gap: 18px; }
+  .trust-check { width: 26px; height: 26px; border-radius: 50%; background: rgba(15,118,110,0.12); color: var(--emerald); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .trust-row h3 { font-size: 17px; margin-bottom: 4px; }
+  .trust-row p { font-size: 14px; color: var(--ink-soft); max-width: 46ch; }
+
+  /* ---------- FINAL CTA ---------- */
+  .cta-band { position: relative; border-radius: 28px; margin: 0 48px; padding: 90px 60px; overflow: hidden; min-height: 320px; display: flex; align-items: center; }
+  .cta-band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cta-band .cta-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(7,20,41,0.92) 0%, rgba(7,20,41,0.55) 60%, rgba(7,20,41,0.25) 100%); }
+  .cta-inner { position: relative; z-index: 2; max-width: 560px; }
+  .cta-inner h2 { color: #fff; font-size: clamp(30px, 3.6vw, 44px); }
+  .cta-inner p { color: rgba(255,255,255,0.75); margin: 16px 0 28px; font-size: 15.5px; line-height: 1.6; }
+
+  /* ---------- FOOTER ---------- */
+  footer { background: var(--midnight-deep); padding: 70px 48px 36px; }
+  .footer-quote { text-align: center; max-width: 640px; margin: 0 auto 50px; color: rgba(255,255,255,0.75); font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; line-height: 1.6; }
+  .footer-quote span { color: var(--gold); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+  .footer-mark { font-family: 'Fraunces', serif; font-size: 18px; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .footer-mark .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+  .footer-links { display: flex; gap: 26px; font-size: 13.5px; color: rgba(255,255,255,0.55); }
+  .footer-note { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px) {
+    .dest-grid { grid-template-columns: repeat(2, 1fr); }
+    .dest-card:nth-child(2), .dest-card:nth-child(4) { margin-top: 0; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .trust-wrap { grid-template-columns: 1fr; }
+    .explore-bar { flex-wrap: wrap; }
+    .eb-field { border-right: none; border-bottom: 1px solid var(--hairline); width: 100%; }
+  }
+  @media (max-width: 640px) {
+    nav, section { padding-left: 22px; padding-right: 22px; }
+    .cta-band { margin: 0 22px; padding: 50px 28px; }
+    .dest-grid, .why-grid { grid-template-columns: 1fr; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .stats-strip { padding: 22px; gap: 22px; }
+    .hero-content { padding: 0 22px 90px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  :focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-mark"><span class="dot"></span> GlobeTrotter</div>
+  <div class="nav-links">
+    <a href="#destinations">Destinations</a>
+    <a href="#why">Why us</a>
+    <a href="#join">Join</a>
+    <a class="nav-cta" href="index2.html">Explore now</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <img class="hero-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Chutes_de_la_Lobe.jpg" alt="Chutes de la Lobé, Cameroon">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="line"></span> Cameroon, beauty unfiltered</div>
+    <h1 class="hero-title">Discover the soul <br>of <span class="accent">Cameroon.</span></h1>
+    <p class="hero-sub">Every road tells a story. Every mountain hides an adventure. Every destination becomes a memory. Start exploring places you'll never forget.</p>
+
+    <div class="explore-bar">
+      <div class="eb-field">
+        <span class="eb-label">Where to</span>
+        <input class="eb-input" placeholder="Search Yaoundé destinations...">
+      </div>
+      <div class="eb-field">
+        <span class="eb-label">Category</span>
+        <input class="eb-input" placeholder="Culture, nature, wildlife...">
+      </div>
+      <button class="eb-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+        Search
+      </button>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn-primary" href="index2.html">
+        Begin Your Journey
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn-ghost" href="#why">Why GlobeTrotter</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue"><span>SCROLL</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-num mono">20+</div><div class="stat-label">Real Yaoundé destinations</div></div>
+  <div class="stat-item"><div class="stat-num mono">2</div><div class="stat-label">MTN MoMo &amp; Orange Money</div></div>
+  <div class="stat-item"><div class="stat-num mono">7</div><div class="stat-label">Hills. All of them, mapped.</div></div>
+  <div class="stat-item"><div class="stat-num mono">24/7</div><div class="stat-label">Live and open, always</div></div>
+</div>
+
+<section class="brand-statement">
+  <div class="section-inner reveal">
+    <p class="brand-quote">GlobeTrotter is more than a travel platform. It's your personal gateway to discovering the beauty, culture, and hidden treasures of Cameroon — <strong>with confidence and ease.</strong></p>
+  </div>
+</section>
+
+<section id="destinations">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">01</span> Handpicked Experiences</div>
+        <h2 class="section-title">Featured Destinations</h2>
+      </div>
+      <p class="section-desc">Discover the places that define Yaoundé — from breathtaking viewpoints to cultural landmarks loved by real travelers.</p>
+    </div>
+
+    <div class="dest-grid">
+      <div class="dest-card reveal">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cath%C3%A9drale_de_Yaound%C3%A9.jpg" alt="Cathédrale Notre-Dame des Victoires">
+        <div class="dest-body">
+          <span class="dest-cat">Culture</span>
+          <h3 class="dest-name">Cathédrale Notre-Dame des Victoires</h3>
+          <p class="dest-desc">Step into the heart of Yaoundé's history through century-old architecture and quiet devotion.</p>
+          <p class="dest-loc">📍 Yaoundé Centre</p>
+        </div>
+      </div>
+
+      <div class="dest-card reveal">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Cameroun.jpg" alt="Mont Fébé, Yaoundé">
+        <div class="dest-body">
+          <span class="dest-cat">Nature</span>
+          <h3 class="dest-name">Mont Fébé</h3>
+          <p class="dest-desc">Watch the sun rise above Yaoundé from one of the city's most breathtaking viewpoints.</p>
+          <p class="dest-loc">📍 Yaoundé Fébé</p>
+        </div>
+      </div>
+
+      <div class="dest-card reveal">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Monument_Yaound%C3%A9.jpg" alt="Monument de la Réunification">
+        <div class="dest-body">
+          <span class="dest-cat">Landmark</span>
+          <h3 class="dest-name">Monument de la Réunification</h3>
+          <p class="dest-desc">A spiral of history — where two Cameroons became one nation.</p>
+          <p class="dest-loc">📍 Yaoundé Centre</p>
+        </div>
+      </div>
+
+      <div class="dest-card reveal">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Centre_ville_Yaound%C3%A9_Cameroun.jpg" alt="Mvog-Betsi Zoo area, Yaoundé">
+        <div class="dest-body">
+          <span class="dest-cat">Wildlife</span>
+          <h3 class="dest-name">Mvog-Betsi Zoo</h3>
+          <p class="dest-desc">Meet Cameroon's incredible wildlife at one of the city's most beloved family destinations.</p>
+          <p class="dest-loc">📍 Yaoundé Mvog-Betsi</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center; margin-top:40px;" class="reveal">
+      <a class="view-all" href="index2.html">
+        View all 20 destinations
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="why-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">02</span> Why GlobeTrotter</div>
+        <h2 class="section-title">Travel with confidence.<br>Experience the difference.</h2>
+      </div>
+      <p class="section-desc">Not a demo. A real way to move around the city, built by someone who actually lives here.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 L14.5 9 L22 9 L16 13.5 L18 21 L12 16.5 L6 21 L8 13.5 L2 9 L9.5 9 Z"/></svg></div>
+        <h3>Travel Smarter</h3>
+        <p>Discover destinations carefully curated for unforgettable experiences — not a random list, a real one.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6l7-3z"/></svg></div>
+        <h3>Trusted Information</h3>
+        <p>Verified places and honest recommendations — real coordinates, real descriptions, no filler.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6c-1.8-1.8-4.7-1.8-6.4 0L12 7l-2.4-2.4c-1.8-1.8-4.7-1.8-6.4 0-1.8 1.8-1.8 4.7 0 6.4L12 20l8.8-8.9c1.8-1.7 1.8-4.7 0-6.5z"/></svg></div>
+        <h3>Explore Like a Local</h3>
+        <p>Experience Yaoundé through the eyes of someone who actually knows its seven hills.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Built To Stay Live</h3>
+        <p>Containerized and deployed for 24/7 access — this isn't a project that only runs on one laptop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">03</span> Secure Payments</div>
+        <h2 class="section-title">Book with confidence.</h2>
+      </div>
+      <p class="section-desc">Safe. Simple. Instant. Using the payment methods you already trust.</p>
+    </div>
+
+    <div class="trust-wrap">
+      <div class="trust-visual reveal">
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <div class="trust-badge-text"><strong>MTN Mobile Money</strong><span>Send, confirm, and your booking is locked in</span></div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <div class="trust-badge-text"><strong>Orange Money</strong><span>The same trusted flow, your choice of provider</span></div>
+        </div>
+      </div>
+
+      <div class="trust-list">
+        <div class="trust-row reveal">
+          <div class="trust-check"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Trusted local payment methods</h3><p>Book with confidence using MTN MoMo and Orange Money — the way payments already work here.</p></div>
+        </div>
+        <div class="trust-row reveal">
+          <div class="trust-check"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Real GPS, not a pin on a map</h3><p>Tap "Navigate" and Google Maps opens with live directions from wherever you're standing.</p></div>
+        </div>
+        <div class="trust-row reveal">
+          <div class="trust-check"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Stories from people who actually went</h3><p>Every destination carries space for real reviews from real travelers — yours could be the first.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" style="padding-top:0;">
+  <div class="cta-band reveal">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Cameroun.jpg" alt="Cameroon landscape">
+    <div class="cta-overlay"></div>
+    <div class="cta-inner">
+      <h2>Cameroon is waiting for you.</h2>
+      <p>Every destination has a story. Every journey begins with one click. Start exploring unforgettable experiences today.</p>
+      <a class="btn-primary" href="index2.html">
+        Begin Your Adventure
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-quote">"The world is full of beautiful places. Cameroon is one of them. <span>Let GlobeTrotter help you discover it.</span>"</p>
+  <div class="footer-bottom">
+    <div class="footer-mark"><span class="dot"></span> GlobeTrotter</div>
+    <div class="footer-links">
+      <a href="#destinations">Destinations</a>
+      <a href="#why">Why us</a>
+      <a href="index2.html">Explore</a>
+    </div>
+    <div class="footer-note mono">MADE IN YAOUNDÉ · 2026</div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>

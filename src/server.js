@@ -1,5 +1,7 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const { readDB } = require('./db');
 const { log } = require('./logger');
 
@@ -12,6 +14,7 @@ const paymentsRoutes = require('./routes/payments.routes');
 const adminRoutes = require('./routes/admin.routes');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // REQUEST LOGGING — satisfies "observable (metrics, logging, tracing)".
@@ -26,12 +29,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
+app.use(express.static(path.join(__dirname, '..', 'web-client')));
+
+app.get('/api', (req, res) => {
   const db = readDB();
   res.json({
     message: 'GlobeTrotter API is running',
     totalSites: db.sites.length,
   });
+});
+
+app.get('/app', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'web-client', 'index2.html'));
 });
 
 app.use('/auth', authRoutes);

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobeTrotter — Explore Yaoundé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #0B1F3A;
+    --midnight-deep: #071429;
+    --emerald: #0F766E;
+    --gold: #F4A261;
+    --coral: #FF6B35;
+    --coral-bright: #FF7F4D;
+    --bg: #F8FAFC;
+    --ink: #111827;
+    --ink-soft: #6B7280;
+    --hairline: rgba(11, 31, 58, 0.10);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; line-height: 1.5; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  h1, h2, h3, .display { font-family: 'Fraunces', serif; font-weight: 450; letter-spacing: -0.01em; color: var(--midnight); }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  .hidden { display: none !important; }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(248,250,252,0.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .brand .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+  nav.app-nav { display: flex; align-items: center; gap: 6px; }
+  nav.app-nav button {
+    background: none; border: none; padding: 9px 16px; border-radius: 100px;
+    font-size: 14px; font-weight: 500; color: var(--ink-soft);
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  nav.app-nav button:hover { background: rgba(11,31,58,0.05); color: var(--midnight); }
+  nav.app-nav button.active { background: var(--midnight); color: #fff; }
+  .nav-auth-btn {
+    background: var(--coral); color: #fff !important; padding: 9px 20px; border-radius: 100px;
+    font-size: 14px; font-weight: 600; border: none; margin-left: 8px;
+    transition: transform 0.2s ease;
+  }
+  .nav-auth-btn:hover { transform: translateY(-1px); }
+
+  main { max-width: 1160px; margin: 0 auto; padding: 40px 32px 100px; }
+
+  /* ---------- AUTH SCREEN ---------- */
+  .auth-wrap { max-width: 880px; margin: 40px auto; display: grid; grid-template-columns: 1fr 1fr; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 70px rgba(11,31,58,0.12); }
+  .auth-visual {
+    background: linear-gradient(165deg, var(--midnight) 0%, var(--midnight-deep) 100%);
+    padding: 50px 40px; color: #fff; display: flex; flex-direction: column; justify-content: center; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .auth-visual::after { content:''; position:absolute; right:-40px; bottom:-40px; width:200px; height:200px; border-radius:50%; background: radial-gradient(circle, rgba(244,162,97,0.25), transparent 70%); }
+  .auth-visual .eyebrow-app { color: var(--gold); font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .auth-visual h2 { color: #fff; font-size: 30px; margin-top: 10px; }
+  .auth-visual p { color: rgba(255,255,255,0.65); font-size: 14.5px; margin-top: 12px; max-width: 32ch; position: relative; z-index: 2; }
+  .auth-forms { background: #fff; padding: 44px 40px; }
+  .tab-switch { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 100px; margin-bottom: 28px; }
+  .tab-switch button { flex: 1; background: none; border: none; padding: 10px; border-radius: 100px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .tab-switch button.active { background: var(--midnight); color: #fff; }
+  form { display: flex; flex-direction: column; gap: 14px; }
+  .field-label { font-size: 12.5px; font-weight: 600; color: var(--midnight); margin-bottom: -8px; }
+  input {
+    padding: 12px 14px; border-radius: 10px; border: 1px solid var(--hairline); font-size: 14px;
+    font-family: inherit; outline: none; transition: border-color 0.2s ease;
+  }
+  input:focus { border-color: var(--emerald); }
+  .submit-btn {
+    background: var(--coral); color: #fff; border: none; padding: 13px; border-radius: 10px;
+    font-weight: 600; font-size: 14.5px; margin-top: 6px; transition: background 0.25s ease, transform 0.2s ease;
+  }
+  .submit-btn:hover { background: var(--coral-bright); transform: translateY(-1px); }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 28px; flex-wrap: wrap; }
+  .search-input {
+    flex: 1; min-width: 220px; padding: 13px 18px; border-radius: 100px; border: 1px solid var(--hairline);
+    font-size: 14px; font-family: inherit; outline: none; background: #fff;
+  }
+  .search-input:focus { border-color: var(--emerald); }
+  .cat-pill {
+    padding: 9px 16px; border-radius: 100px; border: 1px solid var(--hairline); background: #fff;
+    font-size: 13px; font-weight: 500; color: var(--ink-soft); white-space: nowrap; transition: all 0.2s ease;
+  }
+  .cat-pill.active, .cat-pill:hover { background: var(--midnight); color: #fff; border-color: var(--midnight); }
+
+  /* ---------- SITE GRID ---------- */
+  .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+  .site-card {
+    background: #fff; border-radius: 16px; overflow: hidden; cursor: pointer;
+    box-shadow: 0 1px 3px rgba(11,31,58,0.06); transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .site-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(11,31,58,0.14); }
+  .site-visual { height: 150px; position: relative; overflow: hidden; }
+  .site-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .site-card:hover .site-visual img { transform: scale(1.06); }
+  .site-visual.placeholder { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.9); font-size: 26px; }
+  .site-body { padding: 16px 18px; }
+  .site-cat { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--emerald); font-weight: 700; }
+  .site-name { font-size: 16.5px; margin-top: 4px; }
+  .site-meta { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; display: flex; justify-content: space-between; }
+
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 36px; }
+  .page-btn { background: #fff; border: 1px solid var(--hairline); padding: 9px 18px; border-radius: 100px; font-size: 13.5px; font-weight: 600; color: var(--midnight); transition: all 0.2s ease; }
+  .page-btn:hover:not(:disabled) { background: var(--midnight); color: #fff; }
+  .page-btn:disabled { opacity: 0.35; cursor: default; }
+  .page-info { font-size: 13px; color: var(--ink-soft); }
+
+  /* ---------- SITE DETAIL ---------- */
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--emerald); margin-bottom: 20px; }
+  .detail-hero { height: 320px; border-radius: 20px; overflow: hidden; position: relative; margin-bottom: 28px; }
+  .detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .detail-hero .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,31,58,0) 40%, rgba(7,20,41,0.85) 100%); display: flex; align-items: flex-end; padding: 26px; }
+  .detail-hero .overlay h2 { color: #fff; font-size: 28px; }
+  .detail-hero .overlay .cat-tag { color: var(--gold); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .detail-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+  .detail-desc { font-size: 15px; color: var(--ink-soft); margin-bottom: 10px; }
+  .detail-price { font-family: 'Fraunces', serif; font-size: 24px; color: var(--midnight); margin: 14px 0; }
+
+  .action-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .btn-navigate {
+    background: var(--emerald); color: #fff; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 14px;
+    display: inline-flex; align-items: center; gap: 8px; transition: background 0.25s ease;
+  }
+  .btn-navigate:hover { background: #0c5e57; }
+  .btn-book { background: var(--coral); color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; transition: background 0.25s ease; }
+  .btn-book:hover { background: var(--coral-bright); }
+
+  .comments-box { background: #fff; border-radius: 16px; padding: 24px; border: 1px solid var(--hairline); }
+  .comments-box h3 { font-size: 16px; margin-bottom: 16px; }
+  .comment { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+  .comment:last-child { border-bottom: none; }
+  .comment strong { color: var(--midnight); font-size: 13.5px; }
+  .comment p { font-size: 13.5px; color: var(--ink-soft); margin-top: 3px; }
+  .comment-form { display: flex; gap: 8px; margin-top: 16px; }
+  .comment-form input { flex: 1; }
+  .comment-form button { background: var(--midnight); color: #fff; border: none; padding: 0 18px; border-radius: 10px; font-weight: 600; font-size: 13.5px; }
+
+  /* ---------- ITINERARIES ---------- */
+  .page-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .page-head h2 { font-size: 26px; }
+  .new-btn { background: var(--midnight); color: #fff; border: none; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; }
+  .itin-list { display: flex; flex-direction: column; gap: 14px; }
+  .itin-card { background: #fff; border-radius: 14px; padding: 20px 22px; border: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .itin-card h3 { font-size: 17px; }
+  .itin-card .dates { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+  .share-btn { background: var(--emerald); color: #fff; border: none; padding: 9px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
+
+  /* ---------- RECOMMENDATIONS ---------- */
+  .rec-banner { background: linear-gradient(120deg, var(--midnight), var(--midnight-deep)); border-radius: 18px; padding: 26px 30px; color: #fff; margin-bottom: 28px; }
+  .rec-banner h3 { color: #fff; font-size: 19px; }
+  .rec-banner p { color: rgba(255,255,255,0.6); font-size: 13.5px; margin-top: 6px; }
+  .rec-reason { display: inline-block; background: rgba(244,162,97,0.15); color: var(--gold); font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: 100px; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  @media (max-width: 760px) {
+    .auth-wrap { grid-template-columns: 1fr; }
+    .auth-visual { padding: 36px 28px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    nav.app-nav button span.lbl { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html"><span class="dot"></span>GlobeTrotter</a>
+  <nav class="app-nav" id="appNav">
+    <button data-page="sites" class="active">Explore</button>
+    <button data-page="recommendations">For You</button>
+    <button data-page="itineraries">My Itineraries</button>
+    <button id="authNavBtn" class="nav-auth-btn" data-page="auth">Login</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- AUTH PAGE -->
+  <section id="page-auth" class="page">
+    <div class="auth-wrap">
+      <div class="auth-visual">
+        <span class="eyebrow-app">Welcome</span>
+        <h2>Your seven hills<br>are waiting.</h2>
+        <p>Create an account to book real experiences, save itineraries, and pay with MTN MoMo or Orange Money.</p>
+      </div>
+      <div class="auth-forms">
+        <div class="tab-switch">
+          <button id="tabLogin" class="active" onclick="switchAuthTab('login')">Login</button>
+          <button id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+        </div>
+
+        <form id="loginForm">
+          <div class="field-label">Email</div>
+          <input type="email" id="loginEmail" required>
+          <div class="field-label">Password</div>
+          <input type="password" id="loginPassword" required>
+          <button type="submit" class="submit-btn">Log in</button>
+        </form>
+
+        <form id="registerForm" class="hidden">
+          <div class="field-label">Full name</div>
+          <input type="text" id="regName" required>
+          <div class="field-label">Email</div>
+          <input type="email" id="regEmail" required>
+          <div class="field-label">Phone</div>
+          <input type="text" id="regPhone" placeholder="+237...">
+          <div class="field-label">Password</div>
+          <input type="password" id="regPassword" required>
+          <button type="submit" class="submit-btn">Create account</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITES / EXPLORE PAGE -->
+  <section id="page-sites" class="page hidden">
+    <div class="toolbar">
+      <input class="search-input" id="searchInput" placeholder="Search Yaoundé destinations...">
+    </div>
+    <div class="toolbar" id="categoryPills"></div>
+    <div class="site-grid" id="sitesGrid"></div>
+    <div class="pagination">
+      <button class="page-btn" id="prevPage">&larr; Previous</button>
+      <span class="page-info mono" id="pageInfo"></span>
+      <button class="page-btn" id="nextPage">Next &rarr;</button>
+    </div>
+  </section>
+
+  <!-- SITE DETAIL PAGE -->
+  <section id="page-detail" class="page hidden">
+    <a class="back-link" onclick="showPage('sites')">&larr; Back to Explore</a>
+    <div id="detailContent"></div>
+  </section>
+
+  <!-- RECOMMENDATIONS PAGE -->
+  <section id="page-recommendations" class="page hidden">
+    <div class="rec-banner">
+      <h3>Picked for you</h3>
+      <p id="recSubtitle">Based on your interests and what's popular with other travellers right now.</p>
+    </div>
+    <div class="site-grid" id="recGrid"></div>
+  </section>
+
+  <!-- ITINERARIES PAGE -->
+  <section id="page-itineraries" class="page hidden">
+    <div class="page-head">
+      <h2>My Itineraries</h2>
+      <button class="new-btn" onclick="createItineraryPrompt()">+ New Itinerary</button>
+    </div>
+    <div class="itin-list" id="itinerariesList"></div>
+  </section>
+
+</main>
+
+<script>
+const API_BASE = 'http://localhost:4000'; // change to your Render URL once deployed
+
+/* -----------------------------------------------------------
+   REAL IMAGE MAP — only sites we've sourced a verified,
+   Creative-Commons-licensed Wikimedia photo for. Everything else
+   falls back to an honest gradient + icon card, NOT a fake photo.
+   Add more entries here as you source verified images.
+------------------------------------------------------------ */
+const SITE_IMAGES = {
+  s1: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_national_de_Yaound%C3%A9_Cameroun.jpg',
+  s2: 'https://commons.wikimedia.org/wiki/Special:FilePath/Monument_Yaound%C3%A9.jpg',
+  s7: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cath%C3%A9drale_de_Yaound%C3%A9.jpg',
+};
+const CATEGORY_GRADIENTS = {
+  culture:   'linear-gradient(145deg, #0F766E, #0b544e)',
+  nature:    'linear-gradient(145deg, #F4A261, #c97b3d)',
+  landmark:  'linear-gradient(145deg, #0B1F3A, #071429)',
+  wildlife:  'linear-gradient(145deg, #7A9B87, #4c6656)',
+  religious: 'linear-gradient(145deg, #6B7280, #454b54)',
+  market:    'linear-gradient(145deg, #FF6B35, #c94f22)',
+  shopping:  'linear-gradient(145deg, #FF6B35, #c94f22)',
+};
+function siteVisualHTML(site) {
+  const img = SITE_IMAGES[site.id];
+  if (img) return `<div class="site-visual"><img src="${img}" alt="${site.name}"></div>`;
+  const bg = CATEGORY_GRADIENTS[site.category] || CATEGORY_GRADIENTS.landmark;
+  return `<div class="site-visual placeholder" style="background:${bg}">📍</div>`;
+}
+function detailVisualHTML(site) {
+  const img = SITE_IMAGES[site.id];
+  if (img) return `<img src="${img}" alt="${site.name}">`;
+  const bg = CATEGORY_GRADIENTS[site.category] || CATEGORY_GRADIENTS.landmark;
+  return `<div style="width:100%;height:100%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:48px;">📍</div>`;
+}
+
+/* ---------------- API WRAPPER ---------------- */
+function getToken() { return localStorage.getItem('token'); }
+function setToken(t) { localStorage.setItem('token', t); }
+function getUserName() { return localStorage.getItem('userName') || ''; }
+function setUserName(n) { localStorage.setItem('userName', n); }
+
+async function apiFetch(path, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+/* ---------------- NAVIGATION ---------------- */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach((p) => p.classList.add('hidden'));
+  document.getElementById(`page-${name}`).classList.remove('hidden');
+  document.querySelectorAll('#appNav button[data-page]').forEach((b) => b.classList.remove('active'));
+  const navBtn = document.querySelector(`#appNav button[data-page="${name}"]`);
+  if (navBtn && navBtn.id !== 'authNavBtn') navBtn.classList.add('active');
+
+  if (name === 'sites') loadSites(1);
+  if (name === 'recommendations') loadRecommendations();
+  if (name === 'itineraries') loadItineraries();
+}
+document.querySelectorAll('#appNav button[data-page]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const page = btn.dataset.page;
+    if (page !== 'auth' && !getToken()) { showPage('auth'); return; }
+    showPage(page);
+  });
+});
+
+function switchAuthTab(tab) {
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+}
+
+/* ---------------- AUTH ---------------- */
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    await apiFetch('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name: regName.value, email: regEmail.value, phone: regPhone.value, password: regPassword.value }),
+    });
+    alert('Registered! Please log in.');
+    switchAuthTab('login');
+  } catch (err) { alert(err.message); }
+});
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = await apiFetch('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: loginEmail.value, password: loginPassword.value }),
+    });
+    setToken(data.token);
+    setUserName(data.name);
+    document.getElementById('authNavBtn').textContent = data.name;
+    showPage('sites');
+  } catch (err) { alert(err.message); }
+});
+
+/* ---------------- SITES (search, category, pagination) ---------------- */
+let currentPage = 1, totalPages = 1, currentCategory = '', currentSearch = '';
+const CATEGORIES = ['all', 'culture', 'nature', 'landmark', 'wildlife', 'religious', 'market', 'shopping'];
+
+function renderCategoryPills() {
+  document.getElementById('categoryPills').innerHTML = CATEGORIES.map((c) => `
+    <button class="cat-pill ${c === (currentCategory || 'all') ? 'active' : ''}" onclick="filterByCategory('${c}')">
+      ${c.charAt(0).toUpperCase() + c.slice(1)}
+    </button>`).join('');
+}
+function filterByCategory(cat) {
+  currentCategory = cat === 'all' ? '' : cat;
+  loadSites(1);
+}
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  currentSearch = e.target.value;
+  loadSites(1);
+});
+
+async function loadSites(page) {
+  currentPage = page;
+  let query = `?page=${page}&limit=8`;
+  if (currentCategory) query += `&category=${encodeURIComponent(currentCategory)}`;
+  if (currentSearch) query += `&search=${encodeURIComponent(currentSearch)}`;
+
+  const data = await apiFetch(`/sites${query}`);
+  totalPages = data.totalPages;
+
+  renderCategoryPills();
+  document.getElementById('pageInfo').textContent = `PAGE ${data.page} / ${data.totalPages} · ${data.total} SITES`;
+  document.getElementById('prevPage').disabled = data.page <= 1;
+  document.getElementById('nextPage').disabled = data.page >= data.totalPages;
+
+  document.getElementById('sitesGrid').innerHTML = data.sites.map((site) => `
+    <div class="site-card" onclick="showSiteDetail('${site.id}')">
+      ${siteVisualHTML(site)}
+      <div class="site-body">
+        <div class="site-cat">${site.category}</div>
+        <div class="site-name display">${site.name}</div>
+        <div class="site-meta"><span>${site.region}</span><span>${site.price ? site.price + ' FCFA' : 'Free'}</span></div>
+      </div>
+    </div>`).join('');
+}
+document.getElementById('prevPage').addEventListener('click', () => { if (currentPage > 1) loadSites(currentPage - 1); });
+document.getElementById('nextPage').addEventListener('click', () => { if (currentPage < totalPages) loadSites(currentPage + 1); });
+
+/* ---------------- SITE DETAIL (GPS + comments + book/pay) ---------------- */
+async function showSiteDetail(id) {
+  const site = await apiFetch(`/sites/${id}`);
+  renderDetail(site);
+  showPage('detail');
+}
+function renderDetail(site) {
+  const commentsHtml = site.comments.length
+    ? site.comments.map((c) => `<div class="comment"><strong>${c.userName}</strong><p>${c.text}</p></div>`).join('')
+    : `<p style="color:var(--ink-soft);font-size:13.5px;">No comments yet — be the first to share your experience.</p>`;
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-hero">${detailVisualHTML(site)}
+      <div class="overlay"><div><div class="cat-tag">${site.category}</div><h2>${site.name}</h2></div></div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <p class="detail-desc">${site.description}</p>
+        <p style="font-size:13px;color:var(--ink-soft);">📍 ${site.region}</p>
+        <div class="detail-price mono">${site.price ? site.price + ' FCFA' : 'Free entry'}</div>
+        <div class="action-row">
+          <a class="btn-navigate" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${site.lat},${site.lng}">📍 Navigate with GPS</a>
+          <button class="btn-book" onclick="bookAndPay('${site.id}')">Book &amp; Pay</button>
+        </div>
+      </div>
+      <div class="comments-box">
+        <h3>Traveller comments</h3>
+        <div id="commentsList">${commentsHtml}</div>
+        <form class="comment-form" onsubmit="submitComment(event, '${site.id}')">
+          <input type="text" id="commentText" placeholder="Share your experience..." required>
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>`;
+}
+async function submitComment(e, siteId) {
+  e.preventDefault();
+  if (!getToken()) { alert('Please log in to comment.'); showPage('auth'); return; }
+  try {
+    await apiFetch(`/sites/${siteId}/comments`, { method: 'POST', body: JSON.stringify({ text: document.getElementById('commentText').value }) });
+    showSiteDetail(siteId);
+  } catch (err) { alert(err.message); }
+}
+async function bookAndPay(siteId) {
+  if (!getToken()) { alert('Please log in to book.'); showPage('auth'); return; }
+  try {
+    const booking = await apiFetch('/bookings', { method: 'POST', body: JSON.stringify({ siteId }) });
+    const info = booking.paymentInstructions;
+    alert(`Booking created — ${info.amount} FCFA\n\nMTN MoMo: ${info.momoNumber}\nOrange Money: ${info.orangeNumber}\n\n${info.note}`);
+
+    const provider = prompt('Which did you use? Type "momo" or "orange":');
+    if (!provider || (provider !== 'momo' && provider !== 'orange')) { alert('Booking saved as pending — you can complete payment later.'); return; }
+    const momoReference = prompt('Enter the transaction reference from your SMS:');
+    const phoneUsed = prompt('Enter the phone number you paid from:');
+    if (!momoReference || !phoneUsed) return;
+
+    await apiFetch(`/bookings/${booking.id}/submit-payment`, { method: 'POST', body: JSON.stringify({ momoReference, phoneUsed, provider }) });
+    alert('Payment submitted! It will be verified shortly.');
+  } catch (err) { alert(err.message); }
+}
+
+/* ---------------- RECOMMENDATIONS ---------------- */
+async function loadRecommendations() {
+  if (!getToken()) { showPage('auth'); return; }
+  try {
+    const data = await apiFetch('/recommendations');
+    document.getElementById('recSubtitle').textContent = data.basedOnPreferences
+      ? `Matched to your saved interests: ${data.preferences.join(', ')}`
+      : `You haven't set preferences yet — showing what's popular with other travellers.`;
+    document.getElementById('recGrid').innerHTML = data.recommendations.map((site) => `
+      <div class="site-card" onclick="showSiteDetail('${site.id}')">
+        ${siteVisualHTML(site)}
+        <div class="site-body">
+          <div class="site-cat">${site.category}</div>
+          <div class="site-name display">${site.name}</div>
+          <span class="rec-reason">${site.reason}</span>
+        </div>
+      </div>`).join('');
+  } catch (err) { alert(err.message); }
+}
+
+/* ---------------- ITINERARIES (create, view, share) ---------------- */
+async function loadItineraries() {
+  if (!getToken()) { showPage('auth'); return; }
+  const list = await apiFetch('/itineraries');
+  document.getElementById('itinerariesList').innerHTML = list.length
+    ? list.map((it) => `
+      <div class="itin-card">
+        <div>
+          <h3 class="display">${it.title}</h3>
+          <div class="dates mono">${it.startDate} &rarr; ${it.endDate}</div>
+        </div>
+        <button class="share-btn" onclick="shareItinerary('${it.id}')">Get share link</button>
+      </div>`).join('')
+    : `<div class="empty-state">No itineraries yet. Create your first Yaoundé trip plan.</div>`;
+}
+function shareItinerary(id) {
+  const url = `${API_BASE}/itineraries/${id}/share`;
+  prompt('Copy this link to share with friends and family (no login required to view):', url);
+}
+async function createItineraryPrompt() {
+  if (!getToken()) { showPage('auth'); return; }
+  const title = prompt('Itinerary title:');
+  const startDate = prompt('Start date (YYYY-MM-DD):');
+  const endDate = prompt('End date (YYYY-MM-DD):');
+  if (!title || !startDate || !endDate) return;
+  try {
+    await apiFetch('/itineraries', { method: 'POST', body: JSON.stringify({ title, startDate, endDate, siteIds: [] }) });
+    loadItineraries();
+  } catch (err) { alert(err.message); }
+}
+
+/* ---------------- INIT ---------------- */
+if (getToken() && getUserName()) document.getElementById('authNavBtn').textContent = getUserName();
+showPage(getToken() ? 'sites' : 'auth');
+</script>
+
+</body>
+</html>

@@ -1,20 +1,16 @@
-# Use an official lightweight Python runtime as the base image
-FROM python:3.9-slim
+# ---- GlobeTrotter Capstone: Node/Express API + static frontend ----
+FROM node:20-slim
 
-# Set a working directory inside the container
-WORKDIR /globetrotter
+WORKDIR /app
 
-# Copy dependency file first to leverage Docker layer caching
-COPY requirements.txt .
+# Install deps first (better layer caching)
+COPY package*.json ./
+RUN npm install --omit=dev
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-np
-# Copy the application source code
+# Copy the rest of the app
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 5000
+ENV PORT=4000
+EXPOSE 4000
 
-# Run the application
-CMD ["python", "app/main.py"]
+CMD ["node", "src/server.js"]

@@ -28,6 +28,24 @@
       "passwordHash": "$2b$10$0JREXiQdXgujQtZ/CwHsXuvbvbq7NpTtKivLBdtIC/QdAR.Nts/xe",
       "preferences": [],
       "createdAt": "2026-07-26T18:54:19.838Z"
+    },
+    {
+      "id": "u1785237337076",
+      "name": "Bisseck Caroline",
+      "email": "bisseckhandt.chanatl@ictuniversity.edu.cm",
+      "phone": "692377981",
+      "passwordHash": "$2b$10$T3.q7DayW.5cnRMkFw/Ws.XYHzJupFUTZihdThf4BxZ/70MGu9TdC",
+      "preferences": [],
+      "createdAt": "2026-07-28T11:15:37.076Z"
+    },
+    {
+      "id": "u1785237483638",
+      "name": "Bisseck Caroline",
+      "email": "bisseckhandt.chantal@ictuniversity.edu.cm",
+      "phone": "692377981",
+      "passwordHash": "$2b$10$mqr7cTixhNixqLbhkrvAXu6SjG60ZSu1Ktz/N786JTnNWvxA1Nyn2",
+      "preferences": [],
+      "createdAt": "2026-07-28T11:18:03.638Z"
     }
   ],
   "sites": [
@@ -41,7 +59,15 @@
       "lng": 0,
       "imageUrl": "",
       "price": 0,
-      "comments": []
+      "comments": [
+        {
+          "id": "c1785237635027",
+          "userId": "u1785237483638",
+          "userName": "Bisseck Caroline",
+          "text": "This is so beautiful ,i love it !",
+          "createdAt": "2026-07-28T11:20:35.027Z"
+        }
+      ]
     },
     {
       "id": "s2",
@@ -305,6 +331,14 @@
       "siteIds": [
         "s4"
       ]
+    },
+    {
+      "id": "it1785238197880",
+      "userId": "u1785237483638",
+      "title": "My Adventure",
+      "startDate": "2026-07-28",
+      "endDate": "2026-07-31",
+      "siteIds": []
     }
   ],
   "bookings": [
@@ -315,6 +349,14 @@
       "amount": 0,
       "status": "confirmed",
       "createdAt": "2026-07-24T01:03:38.716Z"
+    },
+    {
+      "id": "b1785238222803",
+      "userId": "u1785237483638",
+      "siteId": "s1",
+      "amount": 0,
+      "status": "pending",
+      "createdAt": "2026-07-28T11:30:22.803Z"
     }
   ],
   "payments": [

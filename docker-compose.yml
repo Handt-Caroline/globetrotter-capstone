@@ -1,13 +1,13 @@
-version: "3.9"
-
 services:
   globetrotter:
     build: .
     container_name: globetrotter_app
     ports:
-      - "5000:5000"
-    # Mount local code so changes are reflected without rebuilding the image
+      - "4000:4000"
     volumes:
-      - .:/globetrotter
+      - ./data:/app/data
+      - ./logs:/app/logs
+    env_file:
+      - .env
     environment:
-      - PORT=5000
+      - PORT=4000
