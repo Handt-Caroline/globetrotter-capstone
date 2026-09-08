@@ -1,0 +1,14 @@
+{
+  "name": "GlobeTrotter — Yaoundé Travel Assistant",
+  "short_name": "GlobeTrotter",
+  "description": "Discover Yaoundé: real histories, maps, itineraries and prices in FCFA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#0d9488",
+  "orientation": "portrait",
+  "lang": "en",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
