@@ -1,0 +1,269 @@
+/* =============================================================================
+   index.css  -  THE APP SHELL
+
+   WHAT WAS WRONG BEFORE
+   ---------------------
+   This file was still the stylesheet Vite generates for its starter page. It
+   contained, among other starter-template rules:
+
+       #root { width: 1126px; margin: 0 auto; border-inline: 1px solid ...;
+               text-align: center; }
+
+   Every screen in the app is rendered inside #root, so the whole application
+   was locked to a 1126px column with visible borders down each side and empty
+   space either side of it on any wider display - and everything inside it
+   inherited text-align: center. That single rule is what stopped the app from
+   using the screen.
+
+   It has been replaced with a real application shell: full width, full height,
+   no artificial column, and the layout free to respond to the viewport.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:wght@500;600&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* 100dvh accounts for the browser chrome that slides away on a phone, so a
+     full-height screen doesn't end up scrollable by exactly the toolbar's
+     height. `svh` is the safe fallback for browsers without dvh. */
+  height: 100%;
+}
+
+body {
+  font-family: 'Manrope', 'Segoe UI', system-ui, Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Painted behind the app so an overscroll bounce on iOS shows the theme
+     colour instead of a strip of white. */
+  background: #0a1628;
+  overflow-x: hidden;
+}
+
+html[data-theme='light'] body {
+  background: #eaf6f8;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   THE SHELL: header (fixed) - page - nav row (fixed)
+
+   The two fixed bars are the same on every screen, so the page between them
+   is the only part that scrolls. `--gt-header-h` / `--gt-nav-h` are read by
+   the screens themselves (for their own sticky elements), which is why they
+   are variables rather than repeated numbers.
+   --------------------------------------------------------------------------- */
+:root {
+  --gt-header-h: 60px;
+  --gt-nav-h: 62px;
+  /* How wide reading content is allowed to get before it stops growing.
+     The app fills the screen; long lines of prose inside it do not, because
+     a 2000px-wide paragraph is unreadable. Grids and maps ignore this. */
+  --gt-content-max: 1280px;
+  --gt-gutter: 20px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gt-gutter: 16px;
+  }
+}
+
+/* On a wide screen the three main destinations move up into the header, so
+   the bottom bar disappears and its height stops being reserved. */
+@media (min-width: 900px) {
+  :root {
+    --gt-nav-h: 0px;
+    --gt-header-h: 64px;
+  }
+}
+
+.gt-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+/* The scrolling region between the two bars. */
+.gt-page {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding-top: var(--gt-header-h);
+  padding-bottom: var(--gt-nav-h);
+}
+
+/* A screen that must fill exactly the space between the bars with no page
+   scrolling of its own - the map and the chat rooms use this. `flex: none`
+   so the explicit height wins over .gt-page's flex: 1. */
+.gt-page--fill {
+  flex: none;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Centres a screen's own content and keeps prose from stretching forever,
+   while still letting the background fill the entire window. */
+.gt-container {
+  width: 100%;
+  max-width: var(--gt-content-max);
+  margin-inline: auto;
+  padding-inline: var(--gt-gutter);
+}
+
+.gt-container--wide {
+  max-width: 1600px;
+}
+
+/* Responsive card grid used by the destination / itinerary / location lists.
+   auto-fill means the number of columns follows the width of the window
+   instead of being hard-coded per breakpoint. */
+.gt-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.gt-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+}
+
+/* Shared interaction / entrance helpers. Each screen used to redefine these
+   in its own inline <style> block; they live here once now. */
+.gt-btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+.gt-btn:active {
+  transform: scale(0.96);
+}
+
+.gt-icon-btn {
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+.gt-icon-btn:hover {
+  transform: scale(1.08);
+}
+.gt-icon-btn:active {
+  transform: scale(0.9);
+}
+
+.gt-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.gt-card:hover {
+  transform: translateY(-4px);
+}
+
+.gt-chip {
+  transition: all 0.18s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.gt-chip:active {
+  transform: scale(0.94);
+}
+
+.gt-fadeup {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: gtFadeUp 0.5s ease forwards;
+}
+@keyframes gtFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gtSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.gt-spin {
+  animation: gtSpin 0.9s linear infinite;
+}
+
+.gt-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* Horizontal scrollers without a visible scrollbar. */
+.gt-scroll {
+  scrollbar-width: none;
+}
+.gt-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Vertical scrollers that keep a thin visible bar (chat, long option lists). */
+.gt-scroll-y {
+  scrollbar-width: thin;
+}
+.gt-scroll-y::-webkit-scrollbar {
+  width: 5px;
+}
+.gt-scroll-y::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+}
+
+/* People who have asked their system to reduce motion get no entrance
+   animations - the content simply appears. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gt-fadeup {
+    opacity: 1;
+    transform: none;
+  }
+}
