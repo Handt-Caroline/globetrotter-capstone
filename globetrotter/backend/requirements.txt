@@ -1,0 +1,22 @@
+# --- GlobeTrotter Phase 1 backend dependencies ---
+# fastapi   -> the web framework we use to build the REST API
+# uvicorn   -> the server that actually runs our FastAPI app
+# pyjwt     -> creates and verifies the JWT tokens used for login
+#
+# We deliberately do NOT use a database library (like SQLAlchemy) here.
+# Phase 1 is a MONOLITH that stores everything in a single JSON file,
+# exactly like the lecture slides describe. We'll swap this for a real
+# database in a later phase.
+
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pyjwt==2.9.0
+# python-multipart -> lets FastAPI read multipart/form-data, i.e. file uploads
+# (the "Locations" feature lets a traveller attach photos and videos).
+python-multipart==0.0.12
+
+# --- Testing only (not needed to run the app) ---
+# pytest -> the test runner:  python -m pytest tests -v
+# httpx  -> used by FastAPI's TestClient to call the API from inside tests
+pytest==8.3.3
+httpx==0.27.2
