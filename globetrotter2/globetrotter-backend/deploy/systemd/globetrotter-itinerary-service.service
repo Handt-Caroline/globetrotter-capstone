@@ -1,0 +1,14 @@
+[Unit]
+Description=GlobeTrotter Itinerary Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/globetrotter-backend/services/itinerary-service
+EnvironmentFile=/root/globetrotter-backend/.env
+ExecStart=/root/globetrotter-backend/services/itinerary-service/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8102
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
