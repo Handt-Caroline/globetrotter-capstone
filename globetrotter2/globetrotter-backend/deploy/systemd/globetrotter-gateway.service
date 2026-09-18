@@ -1,0 +1,18 @@
+[Unit]
+Description=GlobeTrotter Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/globetrotter-backend/services/gateway
+EnvironmentFile=/root/globetrotter-backend/.env
+Environment=USER_SERVICE_URL=http://127.0.0.1:8101
+Environment=ITINERARY_SERVICE_URL=http://127.0.0.1:8102
+Environment=RECOMMENDATION_SERVICE_URL=http://127.0.0.1:8103
+Environment=CHAT_SERVICE_URL=http://127.0.0.1:8104
+ExecStart=/root/globetrotter-backend/services/gateway/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8105
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
