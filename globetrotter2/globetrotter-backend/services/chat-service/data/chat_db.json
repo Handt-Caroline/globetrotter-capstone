@@ -1,0 +1,41 @@
+{
+  "rooms": [
+    {
+      "id": "global",
+      "type": "public",
+      "name": "Global Chat",
+      "members": [],
+      "created_by": null,
+      "created_at": "2026-09-12T19:20:02+00:00"
+    },
+    {
+      "id": "fa87e4c3d2ad",
+      "type": "direct",
+      "name": null,
+      "members": [
+        "f4e82e980dab",
+        "3c805c05c133"
+      ],
+      "created_by": "f4e82e980dab",
+      "created_at": "2026-09-12T20:00:27+00:00"
+    }
+  ],
+  "messages": [
+    {
+      "id": "b480af010275",
+      "room_id": "global",
+      "user_id": "20a96ce56772",
+      "user_name": "Nguend Johann",
+      "text": "hello e veryone",
+      "created_at": "2026-09-12T19:30:33+00:00"
+    },
+    {
+      "id": "3d82f6b8bf41",
+      "room_id": "fa87e4c3d2ad",
+      "user_id": "f4e82e980dab",
+      "user_name": "Two Alice",
+      "text": "two-connection gateway test",
+      "created_at": "2026-09-12T20:00:28+00:00"
+    }
+  ]
+}
