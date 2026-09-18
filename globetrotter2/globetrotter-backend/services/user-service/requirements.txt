@@ -1,0 +1,16 @@
+# --- User Service dependencies ---
+# fastapi     -> web framework
+# uvicorn     -> the server that runs the FastAPI app
+# pyjwt       -> creates/verifies the JWT tokens issued at login
+# google-auth -> verifies a "Sign in with Google" ID token (see
+#                app/google_auth.py) - free, no billing tier, just needs a
+#                free OAuth Client ID from Google Cloud Console
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pyjwt==2.9.0
+google-auth==2.35.0
+requests==2.32.3
+
+# --- Testing only (not needed to run the service) ---
+pytest==8.3.3
+httpx==0.27.2
