@@ -1,0 +1,329 @@
+# =============================================================================
+# docker-compose.yml  -  RUN THE WHOLE PROJECT WITH ONE COMMAND
+#
+# This is the literal fulfilment of the assignment's Phase 2 requirement:
+# "Three independent services communicating via REST APIs, with an API
+# Gateway, deployed on a single VM or Docker Compose" - plus the Chat
+# Service and self-hosted Jitsi added for the chat/calls requirement.
+#
+# THE ONE RULE THIS FILE ENFORCES, NOT JUST DOCUMENTS
+# --------------------------------------------------------
+# "The frontend should only ever talk to the Gateway" is backed up here,
+# not just written in a comment: `gateway` is the ONLY app service with a
+# `ports:` entry (published to your actual machine). User Service,
+# Itinerary Service, Recommendation Service and Chat Service are only
+# reachable BY NAME from other containers on the `globetrotter` network
+# below (e.g. http://user-service:8001) - there is no way for a browser on
+# your machine to reach them directly, because Docker never exposed them
+# to your machine's network at all.
+#
+# HOW A SERVICE FINDS ANOTHER SERVICE
+# ---------------------------------------
+# Every *_SERVICE_URL environment variable below uses the OTHER service's
+# Compose name as the hostname (e.g. ITINERARY_SERVICE_URL=http://
+# itinerary-service:8002) - Docker Compose's built-in DNS resolves that
+# name to whichever container is currently running it. This is the exact
+# same env-var-driven design each service already uses for local (non-
+# Docker) runs - only the URL's HOST changes, from "localhost" to the
+# other container's service name.
+#
+# BEFORE YOU RUN THIS: copy .env.example to .env and fill in real secrets
+# (see that file for what each one is and why). Docker Compose loads .env
+# automatically from this same folder.
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------
+  # USER SERVICE - owns users, auth (JWT issuance), preferences
+  # ---------------------------------------------------------------------
+  user-service:
+    build: ./services/user-service
+    environment:
+      GLOBETROTTER_JWT_SECRET: ${GLOBETROTTER_JWT_SECRET}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    volumes:
+      - ./services/user-service/data:/app/data
+    networks:
+      - globetrotter
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------
+  # ITINERARY SERVICE - owns destinations, itineraries, favorites,
+  # routing proxy, media uploads
+  # ---------------------------------------------------------------------
+  itinerary-service:
+    build: ./services/itinerary-service
+    environment:
+      GLOBETROTTER_JWT_SECRET: ${GLOBETROTTER_JWT_SECRET}
+      ORS_API_KEY: ${ORS_API_KEY:-}
+    volumes:
+      - ./services/itinerary-service/data:/app/data
+    networks:
+      - globetrotter
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------
+  # RECOMMENDATION SERVICE - owns NO data. Calls the two services above
+  # over real HTTP (see app/clients.py) - that's the whole point of it.
+  # ---------------------------------------------------------------------
+  recommendation-service:
+    build: ./services/recommendation-service
+    environment:
+      GLOBETROTTER_JWT_SECRET: ${GLOBETROTTER_JWT_SECRET}
+      USER_SERVICE_URL: http://user-service:8001
+      ITINERARY_SERVICE_URL: http://itinerary-service:8002
+    networks:
+      - globetrotter
+    depends_on:
+      user-service:
+        condition: service_healthy
+      itinerary-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------
+  # CHAT SERVICE - owns rooms + messages. Real-time over WebSocket.
+  # Calls User Service over HTTP to resolve names / confirm member ids.
+  # ---------------------------------------------------------------------
+  chat-service:
+    build: ./services/chat-service
+    environment:
+      GLOBETROTTER_JWT_SECRET: ${GLOBETROTTER_JWT_SECRET}
+      USER_SERVICE_URL: http://user-service:8001
+    volumes:
+      - ./services/chat-service/data:/app/data
+    networks:
+      - globetrotter
+    depends_on:
+      user-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8004/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------
+  # API GATEWAY - the ONLY service published to your machine. Routes every
+  # request to whichever service above owns it, proxies the chat
+  # WebSocket. API-only in this repo - the React frontend now lives in
+  # its own separate repo/deploy (see the Gateway's Dockerfile).
+  # ---------------------------------------------------------------------
+  gateway:
+    build: ./services/gateway
+    environment:
+      GLOBETROTTER_JWT_SECRET: ${GLOBETROTTER_JWT_SECRET}
+      USER_SERVICE_URL: http://user-service:8001
+      ITINERARY_SERVICE_URL: http://itinerary-service:8002
+      RECOMMENDATION_SERVICE_URL: http://recommendation-service:8003
+      CHAT_SERVICE_URL: http://chat-service:8004
+    ports:
+      - "8000:8000"
+    networks:
+      - globetrotter
+    depends_on:
+      user-service:
+        condition: service_healthy
+      itinerary-service:
+        condition: service_healthy
+      recommendation-service:
+        condition: service_healthy
+      chat-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # =========================================================================
+  # SELF-HOSTED JITSI MEET - the actual audio/video call server
+  #
+  # Four containers (this is Jitsi's own standard architecture, not
+  # something invented for this project):
+  #   jitsi-web     the meeting web page + reverse proxy in front of it
+  #   jitsi-prosody the XMPP server every participant's browser signals
+  #                 through (who's in the call, mute state, etc.)
+  #   jitsi-jicofo  "Jitsi Conference Focus" - decides which JVB instance
+  #                 runs each meeting
+  #   jitsi-jvb     "Jitsi Videobridge" - the SFU. THIS is the piece that
+  #                 makes 100-person calls actually work: every
+  #                 participant uploads their video ONCE, to the JVB, which
+  #                 then relays it to everyone else - instead of a mesh
+  #                 where every participant would need to upload to every
+  #                 OTHER participant directly (which falls over long
+  #                 before 100 people - see chat-service/app/chatlogic.py's
+  #                 start_call() docstring for the fuller explanation).
+  #
+  # Chat Service (above) NEVER talks to any of these containers and never
+  # touches audio/video itself - it only ever broadcasts a Jitsi ROOM NAME
+  # over the chat WebSocket (see chatlogic.py's start_call()); the
+  # frontend is what opens that room directly against jitsi-web, in a new
+  # browser tab/window, once it hears the "call_started" signal.
+  # =========================================================================
+  jitsi-web:
+    image: jitsi/web:stable
+    ports:
+      - "${JITSI_HTTP_PORT:-8080}:80"
+      - "${JITSI_HTTPS_PORT:-8443}:443"
+    volumes:
+      - ./jitsi-config/web:/config
+      - ./jitsi-config/web/letsencrypt:/etc/letsencrypt
+      - ./jitsi-config/transcripts:/usr/share/jitsi-meet/transcripts
+    environment:
+      # HTTPS is ON by default (not a class-project shortcut this time - it's
+      # required). Two reasons:
+      #   1. Browsers only allow camera/mic access on a "secure context" -
+      #      that's HTTPS, or the single special-cased hostname "localhost".
+      #      A VPS is reached by its IP/domain, never the word "localhost",
+      #      so without real HTTPS every caller's browser silently blocks
+      #      their camera and mic.
+      #   2. This image's own config.js template hard-codes "https://" and
+      #      "wss://" for the signaling URLs no matter what DISABLE_HTTPS
+      #      says - it only strips a literal "https://" prefix off PUBLIC_URL
+      #      to find the bare domain. Point PUBLIC_URL at "http://" instead
+      #      and that prefix-strip silently fails to match, so the template
+      #      glues the two together into a broken URL like
+      #      "https://http://localhost:8080" - the meeting page loads, but
+      #      the actual call signaling can't connect. Found by inspecting the
+      #      generated /config/config.js inside the running container, not
+      #      by guessing.
+      #
+      # With no domain (ENABLE_LETSENCRYPT=0, the default below), the
+      # container generates its own self-signed certificate automatically -
+      # calls work, but every browser shows a one-time "connection is not
+      # private" warning to click through (Advanced > Proceed) before it
+      # trusts that certificate for this host.
+      #
+      # ON YOUR VPS, TO GET A REAL TRUSTED CERTIFICATE (no browser warning):
+      # point a domain's DNS A record at the VPS's public IP, open ports
+      # 80 and 443 on the VPS firewall, then in .env set:
+      #   ENABLE_LETSENCRYPT=1
+      #   LETSENCRYPT_DOMAIN=meet.yourdomain.com
+      #   LETSENCRYPT_EMAIL=you@example.com
+      #   JITSI_PUBLIC_URL=https://meet.yourdomain.com
+      #   JITSI_HTTP_PORT=80
+      #   JITSI_HTTPS_PORT=443
+      - ENABLE_LETSENCRYPT=${ENABLE_LETSENCRYPT:-0}
+      - LETSENCRYPT_DOMAIN=${LETSENCRYPT_DOMAIN:-}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL:-}
+      - ENABLE_HTTP_REDIRECT=1
+      - DISABLE_HTTPS=0
+      - PUBLIC_URL=${JITSI_PUBLIC_URL:-https://localhost:8443}
+      - JICOFO_AUTH_USER=focus
+      - XMPP_DOMAIN=meet.jitsi
+      - XMPP_AUTH_DOMAIN=auth.meet.jitsi
+      - XMPP_BOSH_URL_BASE=http://jitsi-prosody:5280
+      - XMPP_GUEST_DOMAIN=guest.meet.jitsi
+      - XMPP_MUC_DOMAIN=muc.meet.jitsi
+      - XMPP_INTERNAL_MUC_DOMAIN=internal-muc.meet.jitsi
+      - XMPP_RECORDER_DOMAIN=recorder.meet.jitsi
+      - TZ=${TZ:-UTC}
+      # Groups up to 100 - matches the assignment's group-size requirement.
+      - JVB_STAP_LOAD_THRESHOLD=100
+    depends_on:
+      - jitsi-prosody
+    networks:
+      - globetrotter
+    restart: unless-stopped
+
+  jitsi-prosody:
+    image: jitsi/prosody:stable
+    volumes:
+      - ./jitsi-config/prosody/config:/config
+      - ./jitsi-config/prosody/plugins-custom:/prosody-plugins-custom
+    environment:
+      - AUTH_TYPE=internal
+      - XMPP_DOMAIN=meet.jitsi
+      - XMPP_AUTH_DOMAIN=auth.meet.jitsi
+      - XMPP_GUEST_DOMAIN=guest.meet.jitsi
+      - XMPP_MUC_DOMAIN=muc.meet.jitsi
+      - XMPP_INTERNAL_MUC_DOMAIN=internal-muc.meet.jitsi
+      - XMPP_RECORDER_DOMAIN=recorder.meet.jitsi
+      - JICOFO_COMPONENT_SECRET=${JICOFO_COMPONENT_SECRET}
+      - JICOFO_AUTH_USER=focus
+      - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
+      - JVB_AUTH_USER=jvb
+      - JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}
+      - TZ=${TZ:-UTC}
+    networks:
+      - globetrotter
+    restart: unless-stopped
+
+  jitsi-jicofo:
+    image: jitsi/jicofo:stable
+    volumes:
+      - ./jitsi-config/jicofo:/config
+    environment:
+      - XMPP_DOMAIN=meet.jitsi
+      - XMPP_AUTH_DOMAIN=auth.meet.jitsi
+      - XMPP_INTERNAL_MUC_DOMAIN=internal-muc.meet.jitsi
+      - XMPP_MUC_DOMAIN=muc.meet.jitsi
+      - XMPP_SERVER=jitsi-prosody
+      - JICOFO_COMPONENT_SECRET=${JICOFO_COMPONENT_SECRET}
+      - JICOFO_AUTH_USER=focus
+      - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
+      - TZ=${TZ:-UTC}
+    depends_on:
+      - jitsi-prosody
+    networks:
+      - globetrotter
+    restart: unless-stopped
+
+  jitsi-jvb:
+    image: jitsi/jvb:stable
+    ports:
+      - "${JVB_PORT:-10000}:10000/udp"
+      # Default changed from Jitsi's usual 4443 to 5443 - 4443 falls
+      # inside a Windows-reserved port range on many machines (see
+      # .env.example for how to check/pick your own if 5443 collides too).
+      - "${JVB_TCP_PORT:-5443}:4443"
+    volumes:
+      - ./jitsi-config/jvb:/config
+    environment:
+      # See the README: this MUST be the machine's real, reachable IP
+      # address for calls between two DIFFERENT devices to work - 127.0.0.1
+      # only works when every participant is on the SAME machine (e.g. two
+      # tabs, for testing).
+      - DOCKER_HOST_ADDRESS=${DOCKER_HOST_ADDRESS:-127.0.0.1}
+      - XMPP_AUTH_DOMAIN=auth.meet.jitsi
+      - XMPP_INTERNAL_MUC_DOMAIN=internal-muc.meet.jitsi
+      - XMPP_SERVER=jitsi-prosody
+      - JVB_AUTH_USER=jvb
+      - JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}
+      - JVB_BREWERY_MUC=jvbbrewery
+      - JVB_PORT=10000
+      - JVB_TCP_HARVESTER_DISABLED=true
+      - TZ=${TZ:-UTC}
+    depends_on:
+      - jitsi-prosody
+    networks:
+      - globetrotter
+    restart: unless-stopped
+
+networks:
+  globetrotter:
+    driver: bridge
