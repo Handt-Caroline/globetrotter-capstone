@@ -1,0 +1,1219 @@
+# =============================================================================
+# seed.py
+#
+# Starter data so the app isn't empty the first time it runs.
+#
+# Unlike the first draft, this content is researched rather than invented.
+# Dates, names and events below come from public sources (Wikipedia FR/EN,
+# the Musee National's own site, the Basilique de Mvolye parish site,
+# Britannica, Petit Fute and Cameroonian heritage sites). Where a claim
+# could not be verified, the entry describes a neighbourhood or public
+# space rather than naming a specific private business - so nothing here
+# is made up.
+#
+# Fields every destination has:
+#   id, name, category, neighbourhood, description   -> the browse cards
+#   history                                          -> long-form read
+#   getting_there / what_to_expect / tips            -> practical tabs
+#   rating, price_level, price_range                 -> price_range is the
+#       human-readable FCFA string shown in the UI
+#   latitude, longitude                              -> real map pins
+#
+# price_level is one of: "free", "budget", "mid", "premium"
+# =============================================================================
+
+SEED_DESTINATIONS = [
+    # -------------------------------------------------------------------------
+    # Landmarks & monuments
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_landmarks_01",
+        "name": "Monument de la Réunification",
+        "category": "landmarks",
+        "neighbourhood": "Plateau Atemengue",
+        "description": "The spiral concrete tower on Boulevard de la Réunification, built to mark the 1961 joining of the two Cameroons.",
+        "history": (
+            "If you only see one monument in Yaoundé, make it this one — it is the closest thing "
+            "Cameroon has to a national statement carved in concrete.\n\n"
+            "The story it tells begins in 1919. After Germany lost the First World War, its colony of "
+            "Kamerun was split between France and Britain. For four decades two Cameroons existed side "
+            "by side: a larger French-administered territory and a smaller British Southern Cameroons. "
+            "On 1 October 1961, following a plebiscite, Southern Cameroons joined the newly independent "
+            "Republic of Cameroon. In 1972 the federation was dissolved and the United Republic of "
+            "Cameroon was born.\n\n"
+            "President Ahmadou Ahidjo wanted that moment fixed in the landscape and launched a national "
+            "and international design competition. Three names came out of it: Engelbert Mveng, the "
+            "Cameroonian Jesuit priest, historian and artist who conceived the spiral tower and the "
+            "cultural reliefs; Armand Salomon, the French architect who built the main structure; and "
+            "Gédéon Mpando, the Cameroonian sculptor behind the statue. Construction ran roughly from "
+            "1973 to 1976.\n\n"
+            "Read the monument like a text. The tower is two spirals climbing and fusing at the summit — "
+            "often described as two serpents whose heads merge — the two Cameroons becoming one. Inside "
+            "the cone, pillars carry reliefs by Mveng representing the cultural areas of the country: "
+            "north, south, east and west. Beside it stands Mpando's sculpture, some seven metres tall "
+            "and cast in around fifty-three tonnes of concrete: an old man raising the national torch, "
+            "children clinging to him on both sides. The elder is the generation that fought for "
+            "reunification; the children are the generations inheriting it, girls deliberately given "
+            "equal place with boys.\n\n"
+            "The monument is not a neutral object today. The unity it celebrates has been strained by "
+            "the Anglophone crisis in the North-West and South-West regions since 2016, and Cameroonians "
+            "argue about what the spiral now means. That argument is part of the site: you are standing "
+            "in front of a promise the country is still negotiating with itself."
+        ),
+        "getting_there": (
+            "On Boulevard de la Réunification at Plateau Atemengue, close to the army headquarters and "
+            "the French embassy. Any shared taxi heading toward 'Poste Centrale' or 'Carrefour Warda' "
+            "drops you within a short walk — say 'monument' to the driver and you will be understood. "
+            "Roughly 10 minutes by taxi from Poste Centrale."
+        ),
+        "what_to_expect": (
+            "An open, raised esplanade with ramps and staircases, lawns and flowering plants around the "
+            "base. Allow 30-45 minutes. Informal guides may offer to explain the reliefs; agree a price "
+            "before you start. The area is government-adjacent, so keep your camera pointed at the "
+            "monument and not at the surrounding installations."
+        ),
+        "tips": (
+            "Early morning is quietest and the light on the spiral is best. Ask permission before "
+            "photographing anyone. Bring small notes — 500 and 1 000 FCFA — for a guide or a moto ride "
+            "back into the centre."
+        ),
+        "rating": 4.4,
+        "price_level": "free",
+        "price_range": "Free · guide tip ~1 000 FCFA",
+        "latitude": 3.8697,
+        "longitude": 11.5222,
+    },
+    {
+        "id": "dest_landmarks_02",
+        "name": "Palais des Congrès",
+        "category": "landmarks",
+        "neighbourhood": "Ngoa-Ekellé / Tsinga",
+        "description": "Yaoundé's monumental conference palace, the stage for state ceremonies, congresses and big-name concerts.",
+        "history": (
+            "The Palais des Congrès is where official Cameroon performs itself. Built as the country's "
+            "flagship conference venue, it has hosted party congresses, summits, state ceremonies and "
+            "national prize-givings, and its main auditorium doubles as one of the largest formal "
+            "performance halls in the city.\n\n"
+            "Its significance is less about age than about function. In a capital that grew from a "
+            "German research post into a government town, buildings like this one are the physical "
+            "expression of the post-independence state: large, deliberately impressive, designed to seat "
+            "delegations rather than crowds. When Yaoundé hosts an international gathering, this is "
+            "usually where the cameras point.\n\n"
+            "For a visitor the interest is twofold. Architecturally it belongs to the wave of civic "
+            "construction that reshaped the plateau quarters after 1960, alongside ministries, the "
+            "National Assembly and the hotels built for visiting delegations. Culturally, it is one of "
+            "the few places in Yaoundé where you can catch a full orchestral concert, a national dance "
+            "ensemble, a gala or a major Cameroonian artist on a proper stage with a proper sound system "
+            "in a single evening.\n\n"
+            "Programming is irregular and rarely advertised far in advance, which is very much part of "
+            "the local rhythm: you hear about a show a week before it happens, from a poster, a radio "
+            "spot or a friend."
+        ),
+        "getting_there": (
+            "Sits on the heights near Tsinga / Ngoa-Ekellé, a 10-15 minute taxi ride from Poste "
+            "Centrale. Shared taxis run along the boulevard below; on event nights it is easier to take "
+            "a private 'dépôt' taxi straight to the entrance."
+        ),
+        "what_to_expect": (
+            "Outside event days you can walk the grounds and photograph the exterior; interior access "
+            "depends on what is on. On show nights expect security checks, dressed-up crowds and a start "
+            "time later than printed."
+        ),
+        "tips": (
+            "Ticket prices swing wildly by event — a public ceremony can be free, a headline concert "
+            "10 000-25 000 FCFA. Buy from the official desk rather than resellers at the gate, and "
+            "arrive with cash."
+        ),
+        "rating": 4.1,
+        "price_level": "mid",
+        "price_range": "Free outside · concerts 5 000 – 25 000 FCFA",
+        "latitude": 3.8703,
+        "longitude": 11.5019,
+    },
+    {
+        "id": "dest_landmarks_03",
+        "name": "Boulevard du 20 Mai",
+        "category": "landmarks",
+        "neighbourhood": "Centre administratif",
+        "description": "The ceremonial avenue and parade ground at the heart of the administrative quarter, named for National Day.",
+        "history": (
+            "Boulevard du 20 Mai is named after 20 May 1972, the date of the referendum that turned the "
+            "federal republic into the United Republic of Cameroon. Every year on that date the avenue "
+            "becomes the country's main stage: the National Day parade files past the grandstand, with "
+            "the army, schools, universities, trade groups and cultural associations marching in turn "
+            "before the head of state.\n\n"
+            "The rest of the year it is the spine of the administrative quarter. Ministries, banks, the "
+            "central post office and the main hotels sit along or just off it, and the boulevard is one "
+            "of the few genuinely wide, walkable stretches in a city built across seven hills, where "
+            "most streets climb or fall sharply.\n\n"
+            "Walking it end to end is the fastest way to read Yaoundé's layers. Colonial-era "
+            "administrative buildings sit near 1970s state architecture, which sits near glass-fronted "
+            "banks and telecom offices from the last two decades. Street vendors, shoe-shiners, "
+            "phone-credit sellers and moto-taxi ranks fill the gaps between them, which is the actual "
+            "economy of the capital operating in plain sight."
+        ),
+        "getting_there": (
+            "Central and unmissable — most shared taxi routes cross it. Ask for 'Boulevard du 20 Mai' or "
+            "the nearby 'Poste Centrale'."
+        ),
+        "what_to_expect": (
+            "Wide pavements, heavy traffic, constant street commerce. Around 20 May the whole area is "
+            "closed to traffic, packed, and worth the crowd. Mornings before 9 are calm."
+        ),
+        "tips": (
+            "Photograph freely along the commercial stretches but never toward the presidential and "
+            "military buildings. Carry water; there is little shade at midday."
+        ),
+        "rating": 4.0,
+        "price_level": "free",
+        "price_range": "Free",
+        "latitude": 3.8672,
+        "longitude": 11.5170,
+    },
+
+    # -------------------------------------------------------------------------
+    # Museums
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_museums_01",
+        "name": "Musée National du Cameroun",
+        "category": "museums",
+        "neighbourhood": "Ancien palais présidentiel, Centre",
+        "description": "Cameroon's national museum, in the former presidential palace: thirty rooms across the ten regions.",
+        "history": (
+            "The building came first, and it has changed hands with every change of power in Cameroon.\n\n"
+            "The site first served as the residence of Major Hans Dominik, who commanded the German "
+            "military post at Yaoundé during the protectorate. After the First World War, when Germany "
+            "lost its colonies, the French took over the plot, and in 1930 the French governor Théodore "
+            "Marchand built his residence there. Through the late 1940s it housed a succession of French "
+            "governors. After independence it became the presidential palace of Ahmadou Ahidjo, "
+            "Cameroon's first president.\n\n"
+            "On 17 November 1988 a presidential decree assigned the old palace to the National Museum. "
+            "The site covers roughly 15 000 m², with a central building of about 5 000 m², annexes and a "
+            "garden. It opened to the public for the first time in January 2001, during the "
+            "France-Africa summit, then closed in July 2009 for a long renovation driven by the then "
+            "Minister of Arts and Culture, Ama Tutu Muna. It reopened officially on 16 January 2015.\n\n"
+            "Inside, roughly thirty rooms carry you from prehistory to the present: the ten regions and "
+            "their costumes, traditional musical instruments, ritual objects, regalia belonging to "
+            "traditional chiefs, photographic archives of the country's political history — and, for "
+            "music lovers, the saxophone of Manu Dibango, the Cameroonian giant whose 'Soul Makossa' "
+            "went around the world.\n\n"
+            "What makes the museum unusual is the doubling: you are walking through the collections of "
+            "the nation inside the house where the nation was governed. The corridor of independence-era "
+            "photographs hits differently when you remember the president actually lived down the hall."
+        ),
+        "getting_there": (
+            "Central, near the Palais de Justice, walkable from Boulevard du 20 Mai. Shared taxi to "
+            "'Poste Centrale' then five minutes on foot, or ask for 'musée national'."
+        ),
+        "what_to_expect": (
+            "Two to three hours if you read the panels. Guided tours are available and genuinely worth "
+            "it — the guides know the political backstory that labels leave out. Bags may be checked; "
+            "photography rules vary by room, so ask at the desk."
+        ),
+        "tips": (
+            "Closed Mondays in most schedules, and it does close for state events — call or check before "
+            "travelling across town. Ask for the official rate card at the ticket desk and keep your "
+            "ticket stub."
+        ),
+        "rating": 4.5,
+        "price_level": "budget",
+        "price_range": "≈ 1 000 – 5 000 FCFA (nationals / non-nationals, guide extra)",
+        "latitude": 3.8667,
+        "longitude": 11.5163,
+    },
+    {
+        "id": "dest_museums_02",
+        "name": "Musée d'Art Camerounais (Monastère des Bénédictins)",
+        "category": "museums",
+        "neighbourhood": "Mont Fébé",
+        "description": "A small, superb collection of masks, bronzes, stools and instruments inside the Benedictine monastery on Mont Fébé.",
+        "history": (
+            "Three Benedictine monks founded this community on the flank of Mont Fébé in the 1960s, the "
+            "first Benedictine presence in Cameroon. Alongside the monastery they built something "
+            "unexpected: a museum of Cameroonian art, assembled largely through the patient collecting "
+            "of the monks themselves.\n\n"
+            "It is small — a handful of rooms — and that is its charm. Where the National Museum tells "
+            "the story of a state, this collection is about objects and craft: carved wooden masks and "
+            "figures, detailed bronze work, chiefs' stools, ivory pipes, ritual pieces and traditional "
+            "musical instruments drawn from across the country, with strong Grassfields representation.\n\n"
+            "The monastery itself is part of the visit. The monks run a technical college teaching "
+            "carpentry and masonry to young Cameroonians, and a guest house used for retreats by clergy "
+            "and lay people. Visitors can attend mass; the singing in a hillside chapel above the city "
+            "is, for many people, the memory that lasts.\n\n"
+            "Set expectations correctly and you will love it: labelling is sparse and the presentation "
+            "is modest. Come for the quality of the objects, the quiet, and the view down over Yaoundé "
+            "from the terrace — not for interactive displays."
+        ),
+        "getting_there": (
+            "On the Mont Fébé road, above the city and past the golf course. Take a private taxi and "
+            "negotiate a return or a wait — shared taxis thin out as you climb. Around 20-30 minutes "
+            "from the centre depending on traffic."
+        ),
+        "what_to_expect": (
+            "About 45 minutes for the collection, longer if you stay for the grounds or a service. "
+            "Opening hours are tied to monastic life, so mid-morning or mid-afternoon is safest. Modest "
+            "dress is expected."
+        ),
+        "tips": (
+            "Combine it in one trip with the Marian grotto and the Mont Fébé viewpoint — they are on the "
+            "same road. Carry cash; card payment is not available."
+        ),
+        "rating": 4.3,
+        "price_level": "budget",
+        "price_range": "≈ 1 000 – 2 000 FCFA",
+        "latitude": 3.9042,
+        "longitude": 11.5039,
+    },
+
+    # -------------------------------------------------------------------------
+    # Religious sites
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_religious_01",
+        "name": "Basilique Marie-Reine-des-Apôtres de Mvolyé",
+        "category": "religious",
+        "neighbourhood": "Colline de Mvolyé",
+        "description": "The mother church of Catholic Yaoundé, on the hill where the first mission was founded in 1901.",
+        "history": (
+            "On 13 February 1901 German Pallottine missionaries — among them Father Heinrich Vieter and "
+            "Brother Jean Jager — reached the Mfoundi area for the first time. The local chief Essomba "
+            "Mebe received Vieter and gave him land on the hill of Mvolyé, and there the first Catholic "
+            "mission of Yaoundé was planted.\n\n"
+            "The mission grew fast. On 22 January 1905 Vieter became the first bishop of Cameroon and "
+            "Mvolyé became the seat of the apostolic vicariate. Mvolyé is the mother mission of the "
+            "Archdiocese of Yaoundé and, through it, of the dioceses that later split from it — Doumé "
+            "(1949), Mbalmayo (1961), Bafia (1965).\n\n"
+            "Between 1923 and 1927 a cathedral dedicated to the Holy Spirit was raised here, because "
+            "Vieter's first church had become too small for the Pentecost crowds. It was in that "
+            "building that Bishop Vogt lay in state in 1943 before burial in the neighbouring cemetery "
+            "beside Vieter, and there too that the funeral of the paramount chief Charles Atangana was "
+            "celebrated.\n\n"
+            "By 1990 the old cathedral was structurally failing. Archbishop Jean Zoa — the first "
+            "Cameroonian archbishop of Yaoundé — had it taken down and a Marian sanctuary built in its "
+            "place; the foundation stone was laid on 15 August 1990. The new church rests on twelve "
+            "columns for the twelve apostles, stands about 32 metres high and 75 metres wide, and seats "
+            "close to 4 000 people. Its circular, open design deliberately weaves Cameroonian materials "
+            "and craft into Catholic architecture — inculturation built in stone.\n\n"
+            "On 10 December 2006 Cardinal Jean-Louis Tauran, as legate of Pope Benedict XVI, proclaimed "
+            "it a minor basilica. Benedict XVI himself prayed vespers here on 18 March 2009 during his "
+            "visit to Yaoundé."
+        ),
+        "getting_there": (
+            "South exit of the city, on the Mvolyé hill above the Mfoundi valley. Shared taxi toward "
+            "Mvolyé or Efoulan, then a short climb; a private taxi from the centre takes 15-20 minutes."
+        ),
+        "what_to_expect": (
+            "A vast, luminous circular interior and a hillside terrace with one of the finest views over "
+            "Yaoundé at dusk. Sunday mass is long, musical and full; weekday mornings are quiet enough "
+            "to sit alone."
+        ),
+        "tips": (
+            "Cover shoulders and knees. Stay for sunset — the light over the seven hills from the "
+            "forecourt is the reason locals bring visitors here. Photograph the building freely, "
+            "worshippers only with permission."
+        ),
+        "rating": 4.7,
+        "price_level": "free",
+        "price_range": "Free · offering welcome",
+        "latitude": 3.8422,
+        "longitude": 11.5077,
+    },
+    {
+        "id": "dest_religious_02",
+        "name": "Cathédrale Notre-Dame-des-Victoires",
+        "category": "religious",
+        "neighbourhood": "Centre-ville",
+        "description": "The metropolitan cathedral downtown, a central landmark of Catholic Yaoundé and an easy first stop.",
+        "history": (
+            "Notre-Dame-des-Victoires is the cathedral of the Archdiocese of Yaoundé and the church most "
+            "visitors encounter first, because it sits in the middle of the downtown grid rather than on "
+            "a hill.\n\n"
+            "Catholicism arrived in Yaoundé with the Pallottines at Mvolyé in 1901 and expanded steadily "
+            "through the German and French periods; as the administrative city grew around the plateau, "
+            "it needed a cathedral at its centre, not only a mission on its southern edge. The result is "
+            "a working city cathedral: masses in French and in Ewondo, choirs that fill the nave, "
+            "weddings and funerals that spill onto the street, and a forecourt that functions as a "
+            "meeting point in its own right.\n\n"
+            "Culturally, the interest is the music. Cameroonian liturgical singing blends European "
+            "hymnody with local harmony and percussion, and a Sunday high mass here is one of the "
+            "cheapest and most genuine cultural experiences in the capital — no ticket, no performance "
+            "framing, just a congregation that sings extremely well."
+        ),
+        "getting_there": (
+            "Walking distance from Poste Centrale and Boulevard du 20 Mai; every downtown shared taxi "
+            "passes nearby."
+        ),
+        "what_to_expect": (
+            "Open through the day between services. Sunday mornings are crowded and joyful; arrive early "
+            "for a seat. Weekday afternoons are near-empty and cool."
+        ),
+        "tips": (
+            "Modest dress. Keep phones away during the liturgy. Street traffic outside is heavy — watch "
+            "for motos when stepping off the kerb."
+        ),
+        "rating": 4.4,
+        "price_level": "free",
+        "price_range": "Free · offering welcome",
+        "latitude": 3.8657,
+        "longitude": 11.5187,
+    },
+    {
+        "id": "dest_religious_03",
+        "name": "Grotte Mariale du Mont Fébé",
+        "category": "religious",
+        "neighbourhood": "Mont Fébé",
+        "description": "A Marian grotto carved into the rock on Mont Fébé, modelled on Lourdes, with a clear view over the whole city.",
+        "history": (
+            "Cut into the stone on the western flank of Mont Fébé, the grotto shelters a statue of the "
+            "Virgin above a space for prayer. It was given to the Church in Yaoundé by André Fouda, the "
+            "first Cameroonian mayor of the city — 'Ongola Ewondo' in the local name — and is affiliated "
+            "to the grotto of Lourdes, whose form it echoes.\n\n"
+            "It has been a fixture of Yaoundé's religious life for around half a century. On Marian "
+            "feast days, and through the month of May, groups climb the hill to pray here; on ordinary "
+            "days it is one of the quietest places within reach of the centre.\n\n"
+            "The site also does something no church interior can: it puts the city in front of you. From "
+            "the prayer terrace the seven hills spread out below, and the plateau quarters, Mvolyé and "
+            "the Mfoundi valley are all legible at once. Believers come for the Virgin; a fair number of "
+            "visitors come for that view and stay longer than they planned."
+        ),
+        "getting_there": (
+            "On the Mont Fébé road, on the way up toward the monastery and the hotel. Private taxi from "
+            "the centre, 20-25 minutes; ask the driver to wait."
+        ),
+        "what_to_expect": (
+            "A short walk from the parking area to the grotto and terrace. Quiet, prayerful atmosphere; "
+            "police control the access road near the top, so carry ID."
+        ),
+        "tips": (
+            "Go late afternoon for the light and the cooler air. Dress modestly and keep your voice down "
+            "if people are praying."
+        ),
+        "rating": 4.5,
+        "price_level": "free",
+        "price_range": "Free",
+        "latitude": 3.9006,
+        "longitude": 11.5061,
+    },
+
+    # -------------------------------------------------------------------------
+    # Viewpoints & outdoors
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_viewpoints_01",
+        "name": "Mont Fébé — panorama sur Yaoundé",
+        "category": "viewpoints",
+        "neighbourhood": "Mont Fébé",
+        "description": "The green hill north-west of the centre, around 1 060 m up, with the widest view of the seven hills.",
+        "history": (
+            "Yaoundé is often compared to Rome because it is built across seven hills. Mont Fébé is the "
+            "one that lets you see the joke — from the top, the city's ridges and valleys line up below "
+            "you and the geography that shaped the capital finally makes sense.\n\n"
+            "The hill rises to roughly 1 060 metres, some 300 metres above the plateau where the "
+            "downtown sits, and it stays noticeably cooler and breezier than the centre. In Ewondo, "
+            "'Fébé' is commonly explained as wind, which anyone who has stood on the ridge in the late "
+            "afternoon will find convincing.\n\n"
+            "It has been the city's prestige address for decades. The Yaoundé Golf Club opened here in "
+            "1957 — the oldest course in Cameroon, eighteen holes across some sixty hectares of hilly, "
+            "wooded ground. In 1968-69 President Ahmadou Ahidjo had the Hôtel Mont Fébé built on the "
+            "flank, close to the presidential palace, precisely because he liked being able to look out "
+            "over his capital. The Benedictine monastery and its art museum were established on the same "
+            "slope in the 1960s, and the Marian grotto sits below them.\n\n"
+            "Lower down, the Parcours Vita is a public sports and recreation trail where Yaoundé comes "
+            "to run, walk and train, especially at weekends — a genuinely local scene rather than a "
+            "tourist one."
+        ),
+        "getting_there": (
+            "Take a private taxi from the centre (20-30 min) and negotiate a wait or a return trip; "
+            "shared taxis are unreliable on the upper road. Walking up from Bastos is possible for the "
+            "fit, but long and steep."
+        ),
+        "what_to_expect": (
+            "Cool air, forest, joggers on the Parcours Vita, and viewpoints along the road. A police "
+            "post controls access near the summit area because of nearby official residences."
+        ),
+        "tips": (
+            "Carry ID. Go for sunset but arrange your ride down in advance — the road empties after "
+            "dark. Dry season, roughly November to February, gives the clearest views."
+        ),
+        "rating": 4.6,
+        "price_level": "free",
+        "price_range": "Free · taxi ~3 000 – 6 000 FCFA return",
+        "latitude": 3.9053,
+        "longitude": 11.5011,
+    },
+    {
+        "id": "dest_outdoor_01",
+        "name": "Parcours Vita du Mont Fébé",
+        "category": "outdoor",
+        "neighbourhood": "Mont Fébé",
+        "description": "Yaoundé's open-air fitness trail on the wooded lower slopes — running, walking and weekend workout groups.",
+        "history": (
+            "The Parcours Vita is where Yaoundé exercises. Laid out on the wooded lower flank of Mont "
+            "Fébé, it is both a sports circuit and a recreation park, and it draws a steady crowd of "
+            "runners, walkers, football teams warming up and informal training groups — heaviest on "
+            "Saturday and Sunday mornings.\n\n"
+            "It matters more than a jogging track normally would, because public green space in the "
+            "capital is scarce. Yaoundé grew quickly and unevenly across steep terrain, and most "
+            "neighbourhoods have little open ground. The Fébé slope, protected in part by the "
+            "institutions above it, kept its trees, and the trail through them became a shared civic "
+            "space where senior civil servants and students sweat on the same hill.\n\n"
+            "Come at 7 a.m. on a Saturday and you get a portrait of the city that no museum offers: "
+            "aerobics to loud makossa in one clearing, a boxing coach drilling teenagers in another, "
+            "families walking the loop, and vendors selling water, roasted maize and bitter kola at the "
+            "entrance."
+        ),
+        "getting_there": (
+            "Below the monastery on the Mont Fébé road. Taxi from the centre 15-20 minutes; on weekend "
+            "mornings shared taxis run more frequently in this direction."
+        ),
+        "what_to_expect": (
+            "Unpaved, hilly trails and open exercise areas. Busy and social early morning, near-empty by "
+            "midday. Basic vendors at the entrance; no formal facilities."
+        ),
+        "tips": (
+            "Go early — by 9 a.m. it is hot. Trail shoes, not sandals. Leave valuables behind and carry "
+            "just small notes for water."
+        ),
+        "rating": 4.2,
+        "price_level": "free",
+        "price_range": "Free",
+        "latitude": 3.8987,
+        "longitude": 11.5085,
+    },
+    {
+        "id": "dest_nature_01",
+        "name": "Jardin Zoo-Botanique de Mvog-Betsi",
+        "category": "nature",
+        "neighbourhood": "Mvog-Betsi / Melen",
+        "description": "The city zoo and botanical garden, home to rescued Central African primates and big cats since 1951.",
+        "history": (
+            "The quarter's Ewondo names tell you what it was long before the gates went up: Nkolka, "
+            "'hill of the cattle', and Mvog Betsi, understood as the place of the animals — a livestock "
+            "and poultry station operated here between about 1925 and 1930.\n\n"
+            "The zoo proper was created in 1951 by a Mr Pfeiffer, an officer of the colonial "
+            "administration, to keep live wild animals. From 1956 to 1971 it passed through the hands of "
+            "several private operators, who used it partly as a quarantine holding ground for animals "
+            "destined for export. In 1971 it came under Cameroonian administration — first Water and "
+            "Forests within the Ministry of Agriculture, later the tourism delegation, and from 1992 the "
+            "Ministry of Environment and Forests.\n\n"
+            "Conditions declined badly through the following decades. In 1997 the minister ordered its "
+            "rehabilitation and conversion into a zoological and botanical park, with support from the "
+            "British government; conservation organisations working on Cameroon's primates have been "
+            "involved with the site since. Today it sits under the Ministry of Forestry and Wildlife "
+            "(MINFOF).\n\n"
+            "The collection leans heavily toward primates — mandrills, drills, baboons, agile mangabeys, "
+            "De Brazza's monkeys — alongside big cats, birds of prey and reptiles, set in genuinely rich "
+            "tropical vegetation. Many animals arrived as confiscations from the bushmeat and pet trade, "
+            "which is the uncomfortable, honest subtext of the visit: this is a rescue centre as much as "
+            "a zoo, and it is chronically underfunded.\n\n"
+            "Go with that in mind and it becomes a real education in Cameroonian wildlife and in what "
+            "conservation costs."
+        ),
+        "getting_there": (
+            "Melen / Mvog-Betsi, next to the presidential guard quarter. Shared taxi toward Melen or "
+            "'Carrefour GP', then a short walk — the entrance is set back from the main axes."
+        ),
+        "what_to_expect": (
+            "One to two hours. Shaded paths, picnic-friendly lawns, play areas, a snack point. "
+            "Enclosures vary in quality; the primate sections are the strongest part."
+        ),
+        "tips": (
+            "Weekend mornings are the local family scene. Do not feed the animals. Bring cash for entry "
+            "and small change for a guide."
+        ),
+        "rating": 3.9,
+        "price_level": "budget",
+        "price_range": "≈ 1 000 – 3 000 FCFA",
+        "latitude": 3.8649,
+        "longitude": 11.4875,
+    },
+    {
+        "id": "dest_nature_02",
+        "name": "Lac Municipal (Lac Central)",
+        "category": "nature",
+        "neighbourhood": "Centre-ville",
+        "description": "The central lake and its promenade, a rare stretch of open water and shade in the middle of the capital.",
+        "history": (
+            "The municipal lake sits in the valley floor of the city centre, a low, wet hollow between "
+            "the plateau quarters that was landscaped into a public water feature and promenade as "
+            "Yaoundé urbanised.\n\n"
+            "Its importance is more social than historic. In a capital with very little accessible open "
+            "space, the lake and the grounds around it became a default meeting place: students from the "
+            "nearby schools and university faculties, couples, joggers, football on any flat patch, and "
+            "informal food and drink stands at the edges. On public holidays the surrounding streets "
+            "fill with music and grills.\n\n"
+            "It also marks a real piece of the city's geography. Yaoundé sits between the Nyong and "
+            "Sanaga river systems, and its centre drains through this basin. The lake is a reminder that "
+            "underneath the concrete the capital is a valley city — which is also why heavy rain floods "
+            "these quarters, an ongoing municipal problem rather than a historical footnote."
+        ),
+        "getting_there": (
+            "Central, below the main downtown streets; walkable from Poste Centrale or Boulevard du "
+            "20 Mai, or any shared taxi passing 'lac'."
+        ),
+        "what_to_expect": (
+            "A walkable perimeter, shade, street food, and a lively, purely local crowd. Busiest late "
+            "afternoon and at weekends."
+        ),
+        "tips": (
+            "Daytime is best; the area is less pleasant after dark. Keep your phone in a pocket rather "
+            "than your hand in the crowded stretches."
+        ),
+        "rating": 3.8,
+        "price_level": "free",
+        "price_range": "Free · snacks from 500 FCFA",
+        "latitude": 3.8639,
+        "longitude": 11.5119,
+    },
+
+    # -------------------------------------------------------------------------
+    # Markets, shopping & street food
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_shopping_01",
+        "name": "Marché Central de Yaoundé",
+        "category": "shopping",
+        "neighbourhood": "Centre-ville",
+        "description": "The capital's main covered market: fabric, produce, electronics, hardware and everything between.",
+        "history": (
+            "Every large Cameroonian city organises itself around its markets, and the Marché Central is "
+            "Yaoundé's commercial heart — the point where goods coming up from Douala's port and down "
+            "from the Grassfields and the north meet retail buyers.\n\n"
+            "Its rhythm is old. Yaoundé began in 1888 as a German station trading in ivory and rubber, "
+            "and its function as an inland trading hub never stopped; it only changed products. Today "
+            "the same role is performed with wax print by the roll, secondhand clothing, phone parts, "
+            "cocoa and coffee, cooking oil, spices, plastic goods and building hardware.\n\n"
+            "For a visitor the market is the single densest cultural experience in the city: languages "
+            "switching between French, English, Ewondo, Bamiléké dialects and Fulfulde within a few "
+            "metres; the whole national geography represented by traders from every region; and prices "
+            "set by negotiation, not by label.\n\n"
+            "The fabric section is the one most people remember. Buying three or six metres of wax print "
+            "and having it sewn by a neighbourhood tailor within a couple of days is the most "
+            "Cameroonian souvenir there is — and considerably cheaper than anything sold as 'craft'."
+        ),
+        "getting_there": (
+            "Central, minutes from Poste Centrale. Any shared taxi to 'marché central'. Walk in — "
+            "vehicle access is congested."
+        ),
+        "what_to_expect": (
+            "Dense crowds, narrow aisles, constant noise, aggressive but good-humoured selling. Cash "
+            "only. Bargaining is expected — start well below the asking price and settle around the "
+            "middle."
+        ),
+        "tips": (
+            "Go in the morning when it is cooler and better stocked. Carry small notes, keep bags in "
+            "front of you, leave jewellery at home, and agree a price before anyone carries anything "
+            "for you."
+        ),
+        "rating": 4.1,
+        "price_level": "budget",
+        "price_range": "Wax print ≈ 6 000 – 25 000 FCFA / 6 m · snacks from 300 FCFA",
+        "latitude": 3.8659,
+        "longitude": 11.5152,
+    },
+    {
+        "id": "dest_shopping_02",
+        "name": "Marché Mokolo",
+        "category": "shopping",
+        "neighbourhood": "Mokolo",
+        "description": "The sprawling popular market north-west of the centre — cheapest prices, deepest chaos, best people-watching.",
+        "history": (
+            "Mokolo is where Yaoundé actually shops. Larger, rougher and cheaper than the central "
+            "market, it grew with the working neighbourhoods around Briqueterie, Messa and Madagascar as "
+            "the city expanded beyond the colonial plateau in the second half of the twentieth "
+            "century.\n\n"
+            "The market is effectively a city within the city: sections for produce, meat and fish, "
+            "dried goods, secondhand clothing — the famous 'friperie' bales — shoes, kitchenware, tools "
+            "and traditional medicine stalls selling barks, roots and powders. Wholesalers here supply "
+            "smaller neighbourhood markets across the capital, which is why prices are lower and volumes "
+            "larger.\n\n"
+            "It is also one of the most visibly multi-regional spaces in Yaoundé, with strong Bamiléké "
+            "and northern trading presences alongside Beti sellers, and a good place to understand how "
+            "migration inside Cameroon built the capital's population.\n\n"
+            "Be honest with yourself about your tolerance for crowds before going. Mokolo is intense: "
+            "mud after rain, tight passages, constant movement. Visitors who enjoy it come back "
+            "repeatedly; those who do not should stick to the central market."
+        ),
+        "getting_there": (
+            "Shared taxi to 'Mokolo', north-west of the centre past Briqueterie. Cheap and frequent from "
+            "almost anywhere downtown."
+        ),
+        "what_to_expect": (
+            "Very dense, very loud, muddy in the rainy season. Cash only, hard bargaining, and no "
+            "concessions to tourism — which is the appeal."
+        ),
+        "tips": (
+            "Go with a local if you can. Morning only. Carry nothing you would mind losing and keep "
+            "phones out of sight; pickpocketing is the real risk here, not danger."
+        ),
+        "rating": 3.9,
+        "price_level": "budget",
+        "price_range": "Very cheap · most items 500 – 10 000 FCFA",
+        "latitude": 3.8778,
+        "longitude": 11.5043,
+    },
+    {
+        "id": "dest_streetfood_01",
+        "name": "Street food — Quartier Briqueterie",
+        "category": "streetfood",
+        "neighbourhood": "Briqueterie",
+        "description": "The city's best-known grilled-meat quarter: soya skewers, roast fish and northern cooking after dark.",
+        "history": (
+            "Briqueterie takes its name from the brickworks that operated in this hollow north of the "
+            "centre in the colonial period. It became one of Yaoundé's first densely settled popular "
+            "quarters and drew a large community of migrants from Cameroon's northern regions, giving it "
+            "a strongly Muslim, Fulfulde- and Hausa-speaking character distinct from the surrounding "
+            "Beti city.\n\n"
+            "That history is why you eat well here. Northern grilling traditions — soya, thin skewers of "
+            "beef rubbed in a peanut-and-spice mix and cooked over charcoal — took root in Briqueterie "
+            "and spread from it into the rest of the capital, until soya became the standard Yaoundé "
+            "evening street food. Add grilled fish, plantain, beignets, brochettes and sweet mint tea, "
+            "and you have the local dinner economy.\n\n"
+            "The scene starts around dusk, when charcoal grills come out along the streets and stay lit "
+            "well into the night. It is loud, smoky, cheap and extremely good, and it is one of the few "
+            "settings where the capital's regional mix is not a statistic but a plate of food.\n\n"
+            "Two Cameroonian dishes to look for beyond the grill: ndolé, bitter leaves cooked with "
+            "peanuts and fish or beef, widely treated as the national dish, and poulet DG — 'chicken "
+            "director general' — chicken fried with plantain and vegetables, named for being rich enough "
+            "for a boss."
+        ),
+        "getting_there": (
+            "North of the centre near Mokolo; shared taxi to 'Briqueterie'. Easiest by taxi after dark "
+            "rather than on foot from downtown."
+        ),
+        "what_to_expect": (
+            "Street grills, plastic chairs, no menus, prices quoted per skewer or per fish. Busy from "
+            "about 7 p.m. Cash only, small notes."
+        ),
+        "tips": (
+            "Eat where the queue is longest — turnover means freshness. Watch your food come off the "
+            "grill. Skip tap water and ice; bottled drinks only. Modest dress is appreciated in this "
+            "quarter."
+        ),
+        "rating": 4.4,
+        "price_level": "budget",
+        "price_range": "Soya from 100 FCFA/skewer · full meal 1 500 – 3 500 FCFA",
+        "latitude": 3.8783,
+        "longitude": 11.5121,
+    },
+    {
+        "id": "dest_restaurant_01",
+        "name": "Cuisine camerounaise — Bastos & Centre",
+        "category": "restaurant",
+        "neighbourhood": "Bastos",
+        "description": "The sit-down restaurant belt: ndolé, poulet DG, eru, grilled fish and Central African cooking in comfortable rooms.",
+        "history": (
+            "Bastos is the diplomatic quarter — embassies, residences, international organisations — and "
+            "that has shaped how it eats. Restaurants here serve Cameroonian cooking in a form built for "
+            "long lunches and business dinners: table service, printed menus, cold drinks, and a mix of "
+            "national dishes and Lebanese, French and pan-African plates.\n\n"
+            "The dishes themselves come from all over the country. Ndolé, the bitter-leaf and peanut "
+            "stew usually made with fish or beef, is treated as the national dish and travelled from the "
+            "coastal Littoral. Eru, a forest-leaf dish with waterleaf and palm oil, comes from the "
+            "South-West and is a staple of Anglophone Cameroon. Poulet DG and grilled capitaine or "
+            "tilapia turn up everywhere. Koki, mbongo tchobi, kondrè and achu each carry a region's "
+            "signature.\n\n"
+            "Eating a full Cameroonian meal properly is a long affair — starch, sauce, protein and "
+            "sides — and the point of the sit-down restaurants is that you get to take your time over it "
+            "instead of eating standing at a grill.\n\n"
+            "Prices in Bastos run higher than the rest of the city because of the clientele. The same "
+            "dishes cost a third as much in a neighbourhood 'tourne-dos' — the small local eateries that "
+            "feed the working city at lunchtime."
+        ),
+        "getting_there": (
+            "Bastos is north of the centre, uphill from Boulevard du 20 Mai; 10-15 minutes by taxi. "
+            "Shared taxis run to 'Bastos' and 'Golf'."
+        ),
+        "what_to_expect": (
+            "Table service, cards accepted at the larger places but cash safer, and a relaxed pace — "
+            "service is unhurried by design. Lunch is the main meal for many Cameroonians."
+        ),
+        "tips": (
+            "Ask for the dish of the day; it is fresher and cheaper. Try ndolé at least once. For the "
+            "same food at local prices, ask any Yaoundéen where the nearest 'tourne-dos' is."
+        ),
+        "rating": 4.2,
+        "price_level": "mid",
+        "price_range": "Main dish ≈ 3 000 – 12 000 FCFA (tourne-dos 1 000 – 2 000)",
+        "latitude": 3.8869,
+        "longitude": 11.5088,
+    },
+    {
+        "id": "dest_cafe_01",
+        "name": "Cafés de Bastos",
+        "category": "cafe",
+        "neighbourhood": "Bastos",
+        "description": "The quarter's café scene — Cameroonian arabica, wifi that works, and the city's remote-work crowd.",
+        "history": (
+            "Cameroon has grown coffee commercially for over a century — arabica in the western "
+            "highlands around Bamenda, Dschang and Foumbot, robusta in the Littoral and the west — and "
+            "for most of that time the good beans left the country green and unroasted.\n\n"
+            "That has shifted. A generation of Cameroonian roasters and café owners started selling "
+            "national arabica at home, and Bastos, with its diplomatic and NGO population, was where the "
+            "market was. The result is a small but real café culture in the quarter: espresso made "
+            "properly, beans roasted in-country, reliable wifi and air conditioning.\n\n"
+            "The cafés have become the default informal office of the capital — freelancers, students "
+            "writing dissertations, consultants taking meetings, and a steady flow of the Cameroonian "
+            "diaspora home for a few weeks. For a traveller they are the easiest neutral ground in the "
+            "city: somewhere to sit for two hours, plan a route, and drink coffee grown a few hundred "
+            "kilometres away."
+        ),
+        "getting_there": "Bastos, north of the centre; 10-15 minutes by taxi from downtown.",
+        "what_to_expect": (
+            "Air conditioning, wifi, power sockets, pastries, and prices well above street level. Quiet "
+            "mid-morning, busy at lunch."
+        ),
+        "tips": (
+            "Ask whether the beans are Cameroonian arabica and where they were roasted — the good places "
+            "will tell you the region. Buy a bag to take home; it is a better souvenir than a carving."
+        ),
+        "rating": 4.3,
+        "price_level": "mid",
+        "price_range": "Coffee ≈ 1 500 – 3 000 FCFA · light lunch 4 000 – 8 000 FCFA",
+        "latitude": 3.8885,
+        "longitude": 11.5122,
+    },
+
+    # -------------------------------------------------------------------------
+    # Nightlife, arts, learning
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_nightlife_01",
+        "name": "Rue de la Joie, Elig-Essono",
+        "category": "nightlife",
+        "neighbourhood": "Elig-Essono",
+        "description": "Yaoundé's most famous night street: open-air bars, grills, and makossa and bikutsi until very late.",
+        "history": (
+            "The name says it — 'street of joy'. Elig-Essono's night strip is the best-known going-out "
+            "address in Yaoundé, a run of open-air bars, terraces and grills where the volume rises "
+            "after 9 p.m. and does not drop until the early hours.\n\n"
+            "The soundtrack is worth knowing before you arrive. Bikutsi is the Beti rhythm of this "
+            "region — fast, percussive, originally women's music from around Yaoundé, electrified in the "
+            "1960s-80s and carried worldwide by artists like Les Têtes Brûlées. Makossa came from Douala "
+            "and the Littoral and became Cameroon's global export, above all through Manu Dibango's "
+            "'Soul Makossa'. Both still play here nightly, mixed now with coupé-décalé, Afrobeats and "
+            "Cameroonian hip-hop.\n\n"
+            "The formula is simple and cheap: plastic chairs on the pavement, large bottles of "
+            "Cameroonian beer shared at the table, soya and grilled fish from the nearest charcoal "
+            "grill, and conversation conducted at maximum volume. Nobody eats before going out; the food "
+            "is part of the night.\n\n"
+            "It is loud, sociable and unpretentious, and it is where Yaoundé's reputation as a "
+            "better-than-expected nightlife city comes from."
+        ),
+        "getting_there": (
+            "Elig-Essono, just north-east of the centre; short taxi ride from downtown. Say 'Rue de la "
+            "Joie' — every driver knows it."
+        ),
+        "what_to_expect": (
+            "Open-air bars, street grills, very loud music, crowds from about 9 p.m. and peaking after "
+            "midnight, especially Thursday to Saturday. Cash only."
+        ),
+        "tips": (
+            "Agree the taxi fare before getting in, and arrange your ride home rather than walking. "
+            "Order sealed bottles. Keep your phone in a front pocket. Buying a round is how you get "
+            "adopted by the table next to you."
+        ),
+        "rating": 4.3,
+        "price_level": "budget",
+        "price_range": "Large beer ≈ 1 000 – 1 500 FCFA · night out 5 000 – 15 000 FCFA",
+        "latitude": 3.8778,
+        "longitude": 11.5235,
+    },
+    {
+        "id": "dest_arts_01",
+        "name": "Institut Français du Cameroun — Yaoundé",
+        "category": "arts",
+        "neighbourhood": "Centre-ville",
+        "description": "The most reliable cultural programme in the city: concerts, theatre, film, exhibitions and a public library.",
+        "history": (
+            "The Institut Français is the French state's cultural network abroad, and its Yaoundé branch "
+            "has long been one of the steadiest venues for the performing arts in Cameroon. Its value "
+            "for a visitor is precisely that it is programmed in advance and published — in a city where "
+            "most events are announced by word of mouth a week out, here you can look up what is on.\n\n"
+            "The programme is not primarily French. Cameroonian musicians, choreographers, theatre "
+            "companies, stand-up comedians, photographers and film-makers use the stage and gallery "
+            "regularly, and the institute has served as a launch platform for a lot of local careers. "
+            "Film screenings, book launches, debates and festivals fill the calendar alongside "
+            "concerts.\n\n"
+            "There is also a media library open to the public, French classes, and a café courtyard that "
+            "functions as a meeting point for the city's arts scene. If you have one free evening in "
+            "Yaoundé and want to see contemporary Cameroonian culture rather than heritage, check what "
+            "is on here first."
+        ),
+        "getting_there": "Central; walkable from downtown or a short shared-taxi ride.",
+        "what_to_expect": (
+            "Security check at the gate, a published programme, mixed local and expatriate audiences, "
+            "and start times that hold better than elsewhere in the city."
+        ),
+        "tips": (
+            "Check the programme online or at the gate before planning your evening. Many exhibitions "
+            "and library visits are free; concerts and theatre are ticketed and inexpensive."
+        ),
+        "rating": 4.4,
+        "price_level": "budget",
+        "price_range": "Exhibitions free · shows ≈ 1 000 – 5 000 FCFA",
+        "latitude": 3.8663,
+        "longitude": 11.5142,
+    },
+    {
+        "id": "dest_library_01",
+        "name": "Université de Yaoundé I & Bibliothèque Nationale",
+        "category": "library",
+        "neighbourhood": "Ngoa-Ekellé",
+        "description": "The campus that shaped Cameroon's intellectual life, and the national library holding the country's archives.",
+        "history": (
+            "The University of Yaoundé opened in 1962, two years after independence, and became the "
+            "country's leading centre of research and education almost immediately. Restructured in 1993 "
+            "into Yaoundé I and Yaoundé II, its Ngoa-Ekellé campus has been the intellectual engine of "
+            "the capital ever since — and, like campuses everywhere, a political arena. Generations of "
+            "Cameroonian writers, lawyers, doctors, civil servants and opposition figures passed through "
+            "these faculties.\n\n"
+            "The Bibliothèque Nationale holds the country's legal deposit and archival collections: "
+            "colonial-era administrative records, Cameroonian publications, newspapers and reference "
+            "material on the history of the territory from the German protectorate through the French "
+            "and British mandates to the republic.\n\n"
+            "Neither is a conventional tourist site, and that is why they are worth an hour. The campus "
+            "gives you the everyday texture of educated Yaoundé — bookstalls, printing shops, students "
+            "debating in the shade — and the library is the only place in the city where you can hold "
+            "the paper trail of the history the monuments only summarise.\n\n"
+            "Facilities are stretched and catalogues are partly manual. Come with a specific question "
+            "and a librarian will often go far out of their way to help you answer it."
+        ),
+        "getting_there": (
+            "Ngoa-Ekellé, west of the centre below Mont Fébé. Shared taxi to 'université' or "
+            "'Ngoa-Ekellé'."
+        ),
+        "what_to_expect": (
+            "A busy, walkable campus and a quiet reading room. Bring ID for library access; some "
+            "collections require a request form and a wait."
+        ),
+        "tips": (
+            "Weekday mornings only. Photocopying is limited, so take notes. Students are generally happy "
+            "to point you around if you ask politely in French."
+        ),
+        "rating": 3.9,
+        "price_level": "free",
+        "price_range": "Free · reader card may cost ~1 000 FCFA",
+        "latitude": 3.8639,
+        "longitude": 11.4986,
+    },
+    {
+        "id": "dest_sports_01",
+        "name": "Stade Ahmadou Ahidjo",
+        "category": "sports",
+        "neighbourhood": "Mfandena",
+        "description": "The historic national stadium in Mfandena — home of the Indomitable Lions and a full-throated football crowd.",
+        "history": (
+            "Named for Cameroon's first president, the Ahmadou Ahidjo stadium in Mfandena was for "
+            "decades the home of the national football team and the emotional centre of Cameroonian "
+            "sport.\n\n"
+            "Football is not a pastime here, it is national identity. The Indomitable Lions' run to the "
+            "quarter-finals of the 1990 World Cup in Italy — beating the defending champions Argentina "
+            "in the opening match, with Roger Milla's corner-flag dance becoming one of the images of "
+            "the tournament — remains the proudest sporting memory of the country, and it changed how "
+            "African football was regarded worldwide. Cameroon has won the Africa Cup of Nations five "
+            "times.\n\n"
+            "The stadium was extensively renovated ahead of the 2021 Africa Cup of Nations, hosted by "
+            "Cameroon in January and February 2022, when it staged matches alongside the new Olembé "
+            "stadium north of the city.\n\n"
+            "If a league match or a Lions qualifier falls during your stay, go. A Cameroonian football "
+            "crowd — drums, whistles, vuvuzelas, improvised choreography and constant commentary from "
+            "the man behind you — is one of the loudest, funniest cultural experiences the capital "
+            "offers, and tickets cost a fraction of what a museum charges in Europe."
+        ),
+        "getting_there": (
+            "Mfandena, north-east of the centre near Omnisport. Shared taxi to 'Omnisport'; on match "
+            "days traffic seizes up, so go early or walk the last stretch."
+        ),
+        "what_to_expect": (
+            "On match days: queues, body searches, and a very loud, very good-natured crowd. Outside "
+            "match days the surrounding sports complex is used for training and running."
+        ),
+        "tips": (
+            "Buy tickets at the official windows, not from touts. Take nothing you cannot afford to "
+            "lose, no glass, and leave with the crowd rather than after it. Cash only."
+        ),
+        "rating": 4.3,
+        "price_level": "budget",
+        "price_range": "League matches ≈ 1 000 – 3 000 FCFA · internationals 5 000 – 25 000 FCFA",
+        "latitude": 3.8828,
+        "longitude": 11.5265,
+    },
+
+    # -------------------------------------------------------------------------
+    # Hidden gems & day trips
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_hidden_01",
+        "name": "Vallée de la Mefou — chutes & forêt",
+        "category": "hidden",
+        "neighbourhood": "Mefou, south-east of Yaoundé",
+        "description": "Rapids, forest and primate country in the Mefou valley — the easiest real escape from the capital's noise.",
+        "history": (
+            "The Mefou is a tributary of the Nyong, and its valley south-east of Yaoundé holds the "
+            "forest and water that the city itself has largely lost. Rapids and small falls break the "
+            "river where it crosses rock, and the surrounding equatorial forest still supports the "
+            "wildlife that gave the region its reputation.\n\n"
+            "This is also primate country. The Mefou area is known nationally as the location of a "
+            "primate sanctuary caring for gorillas, chimpanzees, drills and mandrills confiscated from "
+            "the bushmeat and pet trades — the same crisis that fills the enclosures at Mvog-Betsi. "
+            "Cameroon sits at the heart of the Congo Basin, the world's second-largest rainforest, and "
+            "the pressure on that forest from logging, farming and hunting is the country's defining "
+            "environmental story.\n\n"
+            "For visitors the valley is a half-day trip: forest walks, river viewpoints, birdlife, and "
+            "villages where the pace has nothing to do with the capital's. Facilities are minimal and "
+            "roads deteriorate quickly in the rainy season, which is exactly why the area stays quiet."
+        ),
+        "getting_there": (
+            "South-east of Yaoundé toward Mfou; roughly an hour by road depending on conditions. Hire a "
+            "car and driver for the day, or arrange transport through a local guide — public transport "
+            "is impractical for the last stretch."
+        ),
+        "what_to_expect": (
+            "Unpaved roads, forest trails, no infrastructure at the falls themselves. If you visit a "
+            "sanctuary, expect fixed opening hours and an entry fee."
+        ),
+        "tips": (
+            "Dry season is far easier on the roads. Closed shoes, long sleeves, insect repellent, and "
+            "cash for entry and your driver. Agree the full day rate before leaving Yaoundé."
+        ),
+        "rating": 4.5,
+        "price_level": "mid",
+        "price_range": "Car + driver ≈ 25 000 – 45 000 FCFA/day · sanctuary entry 5 000 – 10 000 FCFA",
+        "latitude": 3.7167,
+        "longitude": 11.6167,
+    },
+    {
+        "id": "dest_traditions_01",
+        "name": "Artisanat & sculpture sur bois — Mvog-Betsi",
+        "category": "traditions",
+        "neighbourhood": "Mvog-Betsi",
+        "description": "Craft workshops where carvers, weavers and bronze workers sell direct — masks, stools, fabric and beadwork.",
+        "history": (
+            "Cameroon is sometimes called 'Africa in miniature' because so many of the continent's "
+            "cultural and ecological zones are folded into one country, and its craft traditions show "
+            "it. The Grassfields kingdoms of the west — Bamoun, Bamiléké, Bandjoun, Foumban — produced "
+            "the carved thrones, beaded stools, elephant masks and lost-wax bronzes that define "
+            "Cameroonian art in museums abroad. Forest peoples of the south and east carve differently; "
+            "northern traditions work in leather, calabash and woven straw.\n\n"
+            "Yaoundé, as the capital, pulls all of it in. Craft workshops and stalls around Mvog-Betsi "
+            "and near the zoo sell pieces from every region, and some carvers work on site, which is the "
+            "reason to come here rather than to a hotel gift shop: you can watch the tool meet the wood, "
+            "ask what the mask is for, and buy from the person who made it.\n\n"
+            "Two things are worth understanding before you spend. First, there is a real difference "
+            "between a ceremonial object made for use and a decorative copy made for sale — good sellers "
+            "will tell you honestly which you are holding. Second, genuine antiques and any ivory or "
+            "wildlife product are subject to export restrictions and, in the case of ivory, banned "
+            "outright. Buy new work in wood, bronze, beads or fabric and you keep both your conscience "
+            "and your luggage clean."
+        ),
+        "getting_there": "Mvog-Betsi, near the zoo; shared taxi toward Melen or Mvog-Betsi.",
+        "what_to_expect": (
+            "Open workshops and stalls, carvers at work, and firm bargaining. Cash only, and prices open "
+            "far above the real value."
+        ),
+        "tips": (
+            "Expect to pay roughly a third to a half of the first price after negotiating. Ask which "
+            "region a piece comes from and what it represents. Avoid anything ivory — it cannot be "
+            "legally exported."
+        ),
+        "rating": 4.0,
+        "price_level": "budget",
+        "price_range": "Small carvings 3 000 – 10 000 FCFA · large pieces 25 000+ FCFA",
+        "latitude": 3.8571,
+        "longitude": 11.4923,
+    },
+
+    # -------------------------------------------------------------------------
+    # Practical / lifestyle
+    # -------------------------------------------------------------------------
+    {
+        "id": "dest_wellness_01",
+        "name": "Spas & piscines d'hôtel — Bastos / Mont Fébé",
+        "category": "wellness",
+        "neighbourhood": "Bastos & Mont Fébé",
+        "description": "Pools, massage and quiet at the big hotels — where the city goes to switch off for an afternoon.",
+        "history": (
+            "Yaoundé's hotel wellness scene exists because of diplomacy. The capital hosts embassies, "
+            "African Union and UN delegations and a steady flow of conferences, and the hotels built for "
+            "that traffic — the Hilton downtown, the Mont Fébé on the hill above the golf course, opened "
+            "in 1968-69 under Ahmadou Ahidjo — came with pools, gyms and treatment rooms attached.\n\n"
+            "Those facilities are generally open to non-residents for a day pass, which makes them one "
+            "of the few genuinely restful options in a city with limited public leisure space. The Mont "
+            "Fébé's setting is the draw: pools on a hillside at around 950 metres with the capital "
+            "spread out below, and a breeze the plateau never gets.\n\n"
+            "It is worth being clear-eyed about the contrast. A day pass costs more than many "
+            "Yaoundéens earn in a day, and the gap between the hotel terrace and the street outside is "
+            "part of what you are looking at. Enjoy it, but keep the perspective."
+        ),
+        "getting_there": "Bastos and the Mont Fébé road, 10-25 minutes by taxi from downtown.",
+        "what_to_expect": (
+            "Day passes for pool access, paid treatments, towels provided, and a mixed diplomatic and "
+            "local professional crowd. Quiet on weekdays, busy Sunday."
+        ),
+        "tips": (
+            "Call ahead to confirm the day rate and whether the pool is open. Cards are usually accepted "
+            "at the larger hotels, but carry cash as backup."
+        ),
+        "rating": 4.2,
+        "price_level": "premium",
+        "price_range": "Pool day pass ≈ 5 000 – 15 000 FCFA · massage 20 000 – 45 000 FCFA",
+        "latitude": 3.8908,
+        "longitude": 11.5054,
+    },
+    {
+        "id": "dest_coworking_01",
+        "name": "Espaces de coworking — Bastos & Centre",
+        "category": "coworking",
+        "neighbourhood": "Bastos / Centre",
+        "description": "Desks, backup power and stable fibre for remote workers, plus the meetups where Yaoundé's tech scene gathers.",
+        "history": (
+            "Cameroon's tech scene grew up around a specific problem: power cuts and unreliable "
+            "bandwidth make working from home unpredictable. Coworking spaces solved it by pooling a "
+            "generator, an inverter and a serious internet connection, and in doing so became the "
+            "meeting points of the country's startup community.\n\n"
+            "Douala and Buea built the earliest reputations — Buea's 'Silicon Mountain' cluster around "
+            "the university is the best known — but Yaoundé, with the ministries, the universities and "
+            "the donor agencies, developed its own ecosystem of developers, civic-tech projects, fintech "
+            "startups and freelancers working for clients abroad.\n\n"
+            "What you get from a day pass is not just a desk. Evening meetups, hackathons and demo "
+            "nights run out of these spaces, and they are the fastest way for a visiting developer to "
+            "meet the people building things in Central Africa. Mobile money is near-universal in "
+            "Cameroon — MTN MoMo and Orange Money — and a lot of what is being built locally plugs into "
+            "that rail rather than into card payments."
+        ),
+        "getting_there": "Mostly Bastos and the central quarters; 10-15 minutes by taxi from downtown.",
+        "what_to_expect": (
+            "Day and monthly passes, fibre with backup power, meeting rooms, coffee, and an evening "
+            "events calendar. Quiet in the morning, social from late afternoon."
+        ),
+        "tips": (
+            "Ask about generator backup before paying — it is the thing that actually matters. Get a "
+            "local SIM with data as a fallback; MTN and Orange both sell them cheaply with ID."
+        ),
+        "rating": 4.1,
+        "price_level": "mid",
+        "price_range": "Day pass ≈ 3 000 – 7 000 FCFA · monthly 40 000 – 90 000 FCFA",
+        "latitude": 3.8846,
+        "longitude": 11.5139,
+    },
+    {
+        "id": "dest_festivals_01",
+        "name": "Fêtes & concerts — 20 Mai et Omnisport",
+        "category": "festivals",
+        "neighbourhood": "Centre & Mfandena",
+        "description": "Where the capital celebrates: National Day on 20 May, Youth Day on 11 February, concerts and street parties.",
+        "history": (
+            "Cameroon's public calendar gives the capital two big set-pieces. National Day on 20 May "
+            "marks the 1972 referendum that created the United Republic, and fills Boulevard du 20 Mai "
+            "with a parade of the armed forces, schools, universities, professional bodies and cultural "
+            "associations. Youth Day on 11 February is the students' equivalent, and for many "
+            "Cameroonians it is the more affectionate of the two — every school in the country "
+            "marches.\n\n"
+            "Around the official events, the city throws its own party. Streets close, sound systems go "
+            "up, grills come out, and the neighbourhoods hold impromptu concerts that run late. The "
+            "Omnisport complex in Mfandena handles the largest ticketed shows, and the Palais des "
+            "Congrès the formal ones.\n\n"
+            "Cameroonian music is worth planning around. Bikutsi, born in this region, and makossa from "
+            "the coast are the two national rhythms, joined now by Afrobeats and a strong local hip-hop "
+            "and 'mbolé' scene coming out of Yaoundé's popular quarters. Mbolé in particular is a "
+            "Yaoundé-born street genre, danced hard and made by young people from the same "
+            "neighbourhoods that invented it — the most current thing you can hear in the city."
+        ),
+        "getting_there": (
+            "Boulevard du 20 Mai downtown for the parades; Omnisport in Mfandena for large concerts. "
+            "Both are closed to cars on big days, so plan to walk the last stretch."
+        ),
+        "what_to_expect": (
+            "Very large crowds, heavy security, and a city in a genuinely good mood. Parades start "
+            "mid-morning; concerts start late and finish later."
+        ),
+        "tips": (
+            "Arrive hours early for a parade spot. Carry water, cash in small notes and nothing "
+            "valuable. Agree taxi fares in advance — prices rise sharply on event nights."
+        ),
+        "rating": 4.5,
+        "price_level": "free",
+        "price_range": "Parades free · concerts 2 000 – 20 000 FCFA",
+        "latitude": 3.8801,
+        "longitude": 11.5231,
+    },
+    {
+        "id": "dest_family_01",
+        "name": "Sorties en famille — parcs & loisirs",
+        "category": "family",
+        "neighbourhood": "Mvog-Betsi, Mont Fébé, Centre",
+        "description": "The kid-friendly circuit: the zoo, the lake promenade, the Fébé trails and weekend leisure grounds.",
+        "history": (
+            "Family leisure in Yaoundé is largely self-organised, because dedicated children's "
+            "attractions are few. What the city has instead is a handful of green and open spaces that "
+            "families have adopted, and a strong weekend culture of going out together after church.\n\n"
+            "The zoo-botanical garden at Mvog-Betsi is the anchor — shaded lawns, play areas and animals "
+            "in one place. The municipal lake gives an easy central walk with food stalls. The Mont Fébé "
+            "slopes offer cool air and space to run. Around them, informal leisure grounds set up bouncy "
+            "castles, football pitches and grills at weekends, and the neighbourhood does the rest.\n\n"
+            "The practical advantage of this arrangement is cost: a full family Sunday out — transport, "
+            "entry, food, drinks — can be done for a few thousand francs, which is why these places fill "
+            "up rather than emptying. The disadvantage is that facilities are basic and nothing is "
+            "guaranteed, so it pays to arrive with a plan B and a packed bag."
+        ),
+        "getting_there": (
+            "All three anchors are reachable by shared taxi: 'Melen/Mvog-Betsi' for the zoo, 'lac' for "
+            "the lake, 'Fébé' for the hill."
+        ),
+        "what_to_expect": (
+            "Busy Sunday afternoons, informal play areas, food and drink stalls, limited shade at "
+            "midday, and basic toilets at best."
+        ),
+        "tips": (
+            "Go in the morning to beat the heat. Bring water, sunscreen, wipes and small notes. Rain "
+            "arrives fast in the wet season — carry a light waterproof."
+        ),
+        "rating": 4.0,
+        "price_level": "budget",
+        "price_range": "Family day out ≈ 5 000 – 15 000 FCFA total",
+        "latitude": 3.8621,
+        "longitude": 11.4998,
+    },
+    {
+        "id": "dest_budget_01",
+        "name": "Yaoundé gratuit — la ville sans dépenser",
+        "category": "budget",
+        "neighbourhood": "Toute la ville",
+        "description": "The free city: monuments, viewpoints, churches, markets and street life that cost nothing but time.",
+        "history": (
+            "You can spend a full and genuinely good week in Yaoundé for almost nothing, because most of "
+            "what makes the city interesting is public.\n\n"
+            "The Reunification Monument is free. Boulevard du 20 Mai and the administrative quarter are "
+            "free to walk. The basilica at Mvolyé, the cathedral downtown and the Marian grotto on Mont "
+            "Fébé ask nothing but respect and a modest offering. The lake promenade, the Parcours Vita "
+            "trails and the Fébé viewpoints cost only the taxi to reach them. The central market and "
+            "Mokolo are free to wander, and the best street food in the city runs from 100 FCFA a "
+            "skewer.\n\n"
+            "What costs money in Yaoundé is movement and comfort — taxis, hotel pools, imported drinks. "
+            "Learn the shared-taxi system and the equation changes completely: a shared 'ramassage' taxi "
+            "along a main axis costs a few hundred francs, and moto-taxis fill the gaps. Fares are fixed "
+            "by route and negotiated by hand signal, so ask a local to teach you the gestures once and "
+            "you will use them all week.\n\n"
+            "Two practical notes. Cash is king — carry small notes, since change is a permanent problem. "
+            "And mobile money, MTN MoMo and Orange Money, works almost everywhere, often more smoothly "
+            "than a bank card."
+        ),
+        "getting_there": "Everywhere. Shared taxis and moto-taxis cover the whole city cheaply.",
+        "what_to_expect": (
+            "A city best seen on foot in the mornings and by taxi in the heat. Almost all major "
+            "landmarks are free; museums are the main paid exception."
+        ),
+        "tips": (
+            "A shared taxi ('ramassage') beats a private one by a factor of five — hail it, call your "
+            "destination through the window, and get in if the driver honks. Keep 500 and 1 000 FCFA "
+            "notes. Agree any private fare before the door closes."
+        ),
+        "rating": 4.4,
+        "price_level": "free",
+        "price_range": "Free · shared taxi ≈ 300 – 600 FCFA per hop",
+        "latitude": 3.8680,
+        "longitude": 11.5210,
+    },
+]
