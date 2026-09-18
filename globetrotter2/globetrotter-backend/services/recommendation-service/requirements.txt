@@ -1,0 +1,15 @@
+# --- Recommendation Service dependencies ---
+# fastapi   -> web framework
+# uvicorn   -> the server that runs the FastAPI app
+# pyjwt     -> DECODES the caller's JWT just enough to reject a bad one early
+# httpx     -> makes the actual HTTP calls to User Service and Itinerary
+#              Service - this is a RUNTIME dependency here (not just for
+#              tests), because talking to other services over HTTP is this
+#              service's entire job.
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pyjwt==2.9.0
+httpx==0.27.2
+
+# --- Testing only (not needed to run the service) ---
+pytest==8.3.3
