@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": "20a96ce56772",
+      "name": "Nguend Johann",
+      "email": "nguend.johann@ictuniversity.edu.cm",
+      "password_hash": "ba265ba24c0d6240a8e03689566667a3$d8e9492721ca649857b92438d4c9be552131a6681923dd5e0974467bcfc9eda5",
+      "role": "user"
+    },
+    {
+      "id": "5ee8d5c6f632",
+      "name": "Docker Demo",
+      "email": "docker_demo@example.cm",
+      "password_hash": "de7452c70f9acf2a748149c1d860f6ee$d17789d8198c9657c97a1e8049f34130bd41b29193b1797d29f32a44a2cf4271",
+      "role": "user"
+    },
+    {
+      "id": "f4e82e980dab",
+      "name": "Two Alice",
+      "email": "two_alice_9174a643@example.cm",
+      "password_hash": "c42d8a02552055b12a02369f46cdbf2e$e07af97b01aad53fab14205d46e79c6998f635c1251101319b5f76a74f426c8d",
+      "role": "user"
+    },
+    {
+      "id": "3c805c05c133",
+      "name": "Two Bob",
+      "email": "two_bob_9174a643@example.cm",
+      "password_hash": "62924de8e317ebbd7adfb66122631c3a$52bda070a6ced0e7c17d7204389c7010aa8142bd63620439e28ddbe555f7a79a",
+      "role": "user"
+    }
+  ],
+  "preferences": {
+    "20a96ce56772": {
+      "interests": [
+        "Museums & Heritage",
+        "Historical Landmarks",
+        "Religious Sites",
+        "Local Traditions & Craft",
+        "Libraries & Archives",
+        "Performing Arts & Cinema",
+        "Live Music & Nightlife",
+        "Markets & Shopping",
+        "Cafés & Coffee",
+        "Food & Restaurants",
+        "Street Food",
+        "Outdoor & Hiking",
+        "Hidden Gems & Day Trips",
+        "Wellness & Spas"
+      ],
+      "pace": "Balanced",
+      "budget": "₣₣"
+    }
+  }
+}
