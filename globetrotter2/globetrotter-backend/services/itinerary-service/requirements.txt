@@ -1,0 +1,14 @@
+# --- Itinerary Service dependencies ---
+# fastapi              -> web framework
+# uvicorn              -> the server that runs the FastAPI app
+# pyjwt                -> DECODES the JWT that User Service issued (see
+#                         app/security.py) - this service never creates one
+# python-multipart     -> lets FastAPI read file uploads (destination photos/videos)
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pyjwt==2.9.0
+python-multipart==0.0.12
+
+# --- Testing only (not needed to run the service) ---
+pytest==8.3.3
+httpx==0.27.2
