@@ -1,0 +1,33 @@
+# --- Chat Service dependencies ---
+# fastapi              -> web framework, including its WebSocket support
+# uvicorn[standard]    -> the server that runs the app - the [standard]
+#                         extra pulls in `websockets`, which uvicorn uses
+#                         to actually SERVE WebSocket connections
+# websockets           -> pinned EXPLICITLY (not just left to whatever
+#                         uvicorn[standard] happens to pull in) to the
+#                         same version the Gateway pins in its own
+#                         requirements.txt. Found the hard way: a real
+#                         websockets 13.1 (Gateway, as an outbound CLIENT
+#                         proxying a chat connection) <-> websockets 17.1
+#                         (this service, as the ASGI SERVER, pulled in
+#                         transitively and left unpinned) mismatch caused
+#                         messages to be sent successfully on this side
+#                         and never arrive on the Gateway's side - no
+#                         error on either end, just silently lost frames.
+#                         Keeping both services on one pinned version is
+#                         what actually fixed it.
+# pyjwt                -> DECODES the JWT User Service issued (over both
+#                         plain HTTP and a WebSocket's ?token= query param)
+# httpx                -> the real HTTP calls to User Service that resolve
+#                         member names and confirm a user id really exists
+#                         (see app/user_lookup.py)
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+websockets==13.1
+pyjwt==2.9.0
+httpx==0.27.2
+
+# --- Testing only (not needed to run the service) ---
+# TestClient's websocket_connect() is fully synchronous to use (it runs
+# the real ASGI app in a background thread), so no pytest-asyncio needed.
+pytest==8.3.3
