@@ -1,0 +1,15 @@
+[Unit]
+Description=GlobeTrotter Chat Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/globetrotter-backend/services/chat-service
+EnvironmentFile=/root/globetrotter-backend/.env
+Environment=USER_SERVICE_URL=http://127.0.0.1:8101
+ExecStart=/root/globetrotter-backend/services/chat-service/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8104
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
